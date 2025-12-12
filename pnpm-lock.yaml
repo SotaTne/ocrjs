@@ -21,7 +21,13 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
-  packages/tsconfig: {}
+  packages/core: {}
+
+  packages/docs: {}
+
+  packages/infra-contract: {}
+
+  packages/ocr: {}
 
 packages:
 
