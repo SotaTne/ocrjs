@@ -1,7 +1,40 @@
 {
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ]
+  "biome.enabled": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "biome.lsp.bin": "/node_modules/@biomejs/biome/bin/biome",
+  "editor.defaultFormatter": "biomejs.biome",
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSave": true
+  },
+
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSave": true
+  },
+
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.formatOnSave": true
+  },
+
+  "[jsonc]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.formatOnSave": true
+  },
+
+  "cSpell.words": ["ocrjs"]
 }
