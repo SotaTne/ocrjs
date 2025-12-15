@@ -27,8 +27,6 @@ importers:
         specifier: latest
         version: 5.9.3
 
-  packages/config/eslint: {}
-
   packages/config/tsconfig: {}
 
   packages/core:
