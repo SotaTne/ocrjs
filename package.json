@@ -13,6 +13,8 @@
     "@biomejs/biome": "latest",
     "@typescript-eslint/parser": "^8.49.0",
     "eslint": "^9.39.2",
+    "eslint-config-flat-gitignore": "^2.1.0",
+    "fast-glob": "^3.3.3",
     "jiti": "^2.6.1",
     "turbo": "latest",
     "typescript": "latest"

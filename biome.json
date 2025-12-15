@@ -8,7 +8,7 @@
   },
 
   "files": {
-    "ignoreUnknown": false,
+    "ignoreUnknown": true,
     "includes": [
       "packages/**/*.{ts,tsx}",
       "packages/config/**/*.{json,ts}",
@@ -37,7 +37,8 @@
       "suspicious": {
         "noExplicitAny": "warn",
         "noDoubleEquals": "error",
-        "noConsole": "off"
+        "noConsole": "off",
+        "noFallthroughSwitchClause": "error"
       },
 
       "correctness": {
@@ -45,6 +46,7 @@
       },
 
       "style": {
+        "useImportType": "error",
         "useConst": "warn",
         "useNamingConvention": {
           "level": "error",
