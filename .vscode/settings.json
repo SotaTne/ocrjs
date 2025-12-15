@@ -2,11 +2,14 @@
   "biome.enabled": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "biome.lsp.bin": "/node_modules/@biomejs/biome/bin/biome",
   "editor.defaultFormatter": "biomejs.biome",
-
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "eslint.options": {
+    "overrideConfigFile": "./eslint.config.mts"
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
+    "source.fixAll.eslint": "explicit",
     "source.organizeImports.biome": "explicit"
   },
 
@@ -34,6 +37,23 @@
     },
     "editor.suggest.insertMode": "replace",
     "editor.formatOnSave": true
+  },
+
+  "[markdown]": {
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
+    "cSpell.fixSpellingWithRenameProvider": true,
+    "cSpell.advanced.feature.useReferenceProviderWithRename": true,
+    "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
   },
 
   "cSpell.words": ["ocrjs"]

@@ -1,5 +1,5 @@
 {
-  "name": "@ocrjs/config-tsconfig",
+  "name": "@ocrjs/config-eslint",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",

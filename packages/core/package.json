@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "latest",
+    "@ocrjs/config-tsconfig": "workspace:*"
+  }
 }

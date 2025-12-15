@@ -8,7 +8,18 @@
   },
 
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "packages/**/*.{ts,tsx}",
+      "packages/config/**/*.{json,ts}",
+      "packages/**/package.json",
+      "apps/**/*.{ts,tsx}",
+      "apps/**/package.json",
+      ".vscode/*.json",
+      "eslint.config.mts",
+      "turbo.json",
+      "biome.json"
+    ]
   },
 
   "formatter": {
@@ -34,7 +45,40 @@
       },
 
       "style": {
-        "useConst": "warn"
+        "useConst": "warn",
+        "useNamingConvention": {
+          "level": "error",
+          "options": {
+            "strictCase": false,
+            "conventions": [
+              {
+                "selector": { "kind": "interface" },
+                "match": "I[A-Z].*",
+                "formats": ["PascalCase"]
+              },
+              {
+                "selector": { "kind": "class" },
+                "formats": ["PascalCase"]
+              },
+              {
+                "selector": { "kind": "classMethod" },
+                "formats": ["camelCase"]
+              },
+              {
+                "selector": { "kind": "classProperty" },
+                "formats": ["camelCase"]
+              },
+              {
+                "selector": { "kind": "variable" },
+                "formats": ["camelCase", "CONSTANT_CASE", "snake_case"]
+              },
+              {
+                "selector": { "kind": "function" },
+                "formats": ["camelCase", "PascalCase", "snake_case"]
+              }
+            ]
+          }
+        }
       }
     }
   },

@@ -1,21 +1,21 @@
 {
   "name": "ocrjs",
   "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "biome lint && eslint",
+    "format": "biome format",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.8",
-    "prettier": "^3.7.4",
-    "turbo": "^2.6.3",
-    "typescript": "5.9.2"
+    "@biomejs/biome": "latest",
+    "@typescript-eslint/parser": "^8.49.0",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1",
+    "turbo": "latest",
+    "typescript": "latest"
   },
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=18"
-  }
+  "packageManager": "pnpm@10.8.1"
 }

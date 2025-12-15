@@ -1,5 +1,5 @@
 {
-  "name": "@ocrjs/infra-contract",
+  "name": "@ocrjs/engine",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
