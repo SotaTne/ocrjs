@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --outdir=dist --format=esm --platform=neutral"
   },
   "devDependencies": {
+    "@ocrjs/config-tsconfig": "workspace:*",
     "esbuild": "^0.27.2",
-    "@ocrjs/config-tsconfig": "workspace:*"
-  },
-  "exports": {
-    "/*": "./src/*.ts"
+    "typescript": "latest"
   }
 }

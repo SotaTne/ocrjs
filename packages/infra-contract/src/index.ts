@@ -1,3 +1,4 @@
+export * from './base/ErrorableBase';
 export * from './interfaces/IContour';
 export * from './interfaces/IGeometryPolygon';
 export * from './interfaces/IImage';

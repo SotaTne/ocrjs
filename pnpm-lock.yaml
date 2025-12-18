@@ -41,6 +41,9 @@ importers:
       esbuild:
         specifier: ^0.27.2
         version: 0.27.2
+      typescript:
+        specifier: latest
+        version: 5.9.3
 
   packages/config/tsconfig: {}
 
@@ -61,9 +64,15 @@ importers:
 
   packages/infra-contract:
     devDependencies:
+      '@ocrjs/config-esbuild':
+        specifier: workspace:*
+        version: link:../config/esbuild
       '@ocrjs/config-tsconfig':
         specifier: workspace:*
         version: link:../config/tsconfig
+      esbuild:
+        specifier: ^0.27.2
+        version: 0.27.2
       typescript:
         specifier: latest
         version: 5.9.3

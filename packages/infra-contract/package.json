@@ -2,15 +2,18 @@
   "name": "@ocrjs/infra-contract",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p tsconfig.json && node esbuild.config.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
-    "typescript": "latest",
-    "@ocrjs/config-tsconfig": "workspace:*"
+    "@ocrjs/config-esbuild": "workspace:*",
+    "@ocrjs/config-tsconfig": "workspace:*",
+    "esbuild": "^0.27.2",
+    "typescript": "latest"
   }
 }

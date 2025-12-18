@@ -2,6 +2,10 @@
   "extends": "@ocrjs/config-tsconfig/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
-  }
+    "rootDir": "src",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "dist",
+  },
+  "exclude": ["node_modules", "dist"]
 }
