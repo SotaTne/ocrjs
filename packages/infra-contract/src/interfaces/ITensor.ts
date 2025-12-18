@@ -1,8 +1,6 @@
-/**
- * Supported data types for Tensor operations.
- * Includes quantization types (int8, float16) for optimization.
- */
-export type DType = 'float32' | 'float16' | 'int32' | 'int8' | 'uint8' | 'bool';
+import type { DType, TensorLayout } from '../types/CommonTypes';
+import type { Errorable } from '../types/Errorable';
+import type { IImage } from './IImage';
 
 /**
  * Represents a handle to a Tensor computation.
@@ -14,7 +12,7 @@ export type DType = 'float32' | 'float16' | 'int32' | 'int8' | 'uint8' | 'bool';
  * All mathematical operations return a new ITensor handle synchronously (building the graph/queue),
  * while raw data access is asynchronous.
  */
-export interface ITensor {
+export interface ITensor extends Errorable<ITensor> {
   /**
    * shape of the tensor.
    * e.g., [1, 3, 224, 224]
@@ -23,6 +21,7 @@ export interface ITensor {
 
   /**
    * Data type of the tensor.
+   * Note: bfloat16 tensors are computed as float32 internally.
    */
   readonly dtype: DType;
 
@@ -168,15 +167,31 @@ export interface ITensor {
   std(axis?: number, keepDims?: boolean): ITensor;
 
   /**
+   * Convert tensor to IImage.
+   * Assumes tensor is in image format (3D or 4D with batch dimension).
+   * @param layout Input tensor layout (default 'NCHW')
+   * @returns IImage with values normalized to [0, 255] range
+   */
+  toImage(layout?: TensorLayout): IImage;
+
+  /**
    * Transfers the data from the backend to the host (CPU).
    * This is the only way to inspect the actual values.
+   *
+   * Note: For bfloat16 tensors, returns Float32Array as they are
+   * computed as float32 internally.
    */
   toData(): Promise<
-    Float32Array | Int32Array | Int8Array | Uint8Array | Uint8ClampedArray
+    | Float32Array // float32 and bfloat16 both return Float32Array
+    | Int32Array
+    | Float16Array
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
   >;
 
   /**
    * Clean up resources (GPU buffers, Wasm memory) associated with this handle.
    */
-  dispose(): void;
+  dispose(): ITensor; // return None ITensor Object any case to allow chaining
 }

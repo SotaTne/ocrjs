@@ -56,5 +56,5 @@
     "cSpell.advanced.feature.useReferenceProviderRemove": "/^#+\\s/"
   },
 
-  "cSpell.words": ["ocrjs"]
+  "cSpell.words": ["Errorable", "ocrjs"]
 }

@@ -59,7 +59,14 @@ importers:
 
   packages/infra: {}
 
-  packages/infra-contract: {}
+  packages/infra-contract:
+    devDependencies:
+      '@ocrjs/config-tsconfig':
+        specifier: workspace:*
+        version: link:../config/tsconfig
+      typescript:
+        specifier: latest
+        version: 5.9.3
 
   packages/ocr: {}
 
