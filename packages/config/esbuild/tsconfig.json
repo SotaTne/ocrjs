@@ -1,0 +1,3 @@
+{
+  "extends": "@ocrjs/config-tsconfig/base.json"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@ocrjs/config-esbuild",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "@ocrjs/config-tsconfig": "workspace:*"
+  },
+  "exports": {
+    "/*": "./src/*.ts"
+  }
+}
