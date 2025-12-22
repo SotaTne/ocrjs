@@ -28,6 +28,11 @@ build
 dist
 .docs
 
+# API docs
+packages/docs/api/html/**
+
+# allow markdown
+!packages/docs/api/md/**
 
 # Debug
 npm-debug.log*
