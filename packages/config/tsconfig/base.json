@@ -23,7 +23,10 @@
 
     "declaration": true,
     "declarationMap": true,
-    "incremental": false
+    "incremental": false,
+
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false
   },
   "exclude": ["node_modules", "dist"]
 }

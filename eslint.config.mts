@@ -1,5 +1,5 @@
-import { defineConfig } from 'eslint/config';
 import tsParser from '@typescript-eslint/parser';
+import { defineConfig } from 'eslint/config';
 import gitignore from 'eslint-config-flat-gitignore';
 import fg from 'fast-glob';
 
@@ -35,6 +35,11 @@ export default defineConfig([
             "PropertyDefinition[accessibility='private'], TSParameterProperty[accessibility='private'], MethodDefinition[accessibility='private']",
           message:
             'Use ECMAScript private fields (#name) instead of TypeScript `private` fields.',
+        },
+        {
+          selector: 'Decorator',
+          message:
+            'TypeScript decorators are forbidden. Use explicit composition instead.',
         },
       ],
     },

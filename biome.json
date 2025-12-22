@@ -13,6 +13,7 @@
       "packages/**/*.{ts,tsx}",
       "packages/config/**/*.{json,ts}",
       "packages/**/package.json",
+      "packages/**/typedoc.json",
       "apps/**/*.{ts,tsx}",
       "apps/**/package.json",
       ".vscode/*.json",

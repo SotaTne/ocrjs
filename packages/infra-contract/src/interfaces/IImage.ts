@@ -184,6 +184,7 @@ export interface IImage extends Errorable<IImage> {
    * Find contours in binary image.
    * Image should be binary (thresholded) before calling this.
    * @returns Array of detected contours
+   * @throws Error if the image is not single-channel binary
    */
   findContours(): IContour[];
 
@@ -284,6 +285,9 @@ export interface IImage extends Errorable<IImage> {
   /**
    * Convert to ImageData for display in browser.
    * Always returns RGBA format (4 channels).
+   *
+   * @returns Promise resolving to ImageData object
+   * @throws Error if the image cannot be converted to ImageData
    */
   toImageData(): Promise<ImageData>;
 

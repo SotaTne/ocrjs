@@ -1,0 +1,11 @@
+{
+  "extends": "@ocrjs/config-tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "scripts",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "dist",
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["../*/.docs/docs.json"],
+  "readme": "none",
+  "plugin": ["typedoc-plugin-markdown"],
+  "entryPointStrategy": "merge",
+  "includeVersion": false,
+  "outputs": [
+    {
+      "name": "html",
+      "path": "./api/html"
+    },
+    {
+      "name": "markdown",
+      "path": "./api/md"
+    }
+  ]
+}

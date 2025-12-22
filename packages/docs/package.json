@@ -1,12 +1,25 @@
 {
   "name": "@ocrjs/docs",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "guide": "dist/cli.js guide",
+    "blog": "dist/cli.js blog",
+    "check": "dist/cli.js check",
+    "build": "tsc -p tsconfig.json && node esbuild.config.mjs",
+    "docs:merge": "typedoc",
+    "prev-api:md": "mdts ./api/md/ -p 8180",
+    "prev-api:html": "http-server ./api/html/ -p 8181"
   },
-  "keywords": [],
-  "author": "",
+  "devDependencies": {
+    "@ocrjs/config-esbuild": "workspace:*",
+    "@ocrjs/config-tsconfig": "workspace:*",
+    "commander": "^14.0.2",
+    "http-server": "^14.1.1",
+    "mdts": "^0.14.0",
+    "typedoc": "^0.28.15",
+    "typedoc-plugin-markdown": "^4.9.0"
+  },
   "license": "Apache-2.0"
 }

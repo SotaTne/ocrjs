@@ -4,13 +4,32 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
+    },
+    "docs:json": {
+      "dependsOn": ["^docs:json"],
+      "inputs": [
+        "src/**",
+        "typedoc.json",
+        "tsconfig.json",
+        "package.json",
+        "$TURBO_ROOT$/packages/config/**",
+        "!**/node_modules/**",
+        "!**/dist/**",
+        "!**/.turbo/**"
+      ],
+      "outputs": [".docs/docs.json"]
+    },
+    "docs:merge": {
+      "dependsOn": ["docs:json"],
+      "inputs": ["$TURBO_ROOT$/packages/*/.docs/docs.json"],
+      "outputs": ["api/html/**", "api/md/**"]
     },
     "dev": {
       "cache": false,

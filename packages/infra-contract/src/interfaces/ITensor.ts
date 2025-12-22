@@ -180,6 +180,11 @@ export interface ITensor extends Errorable<ITensor> {
    *
    * Note: For bfloat16 tensors, returns Float32Array as they are
    * computed as float32 internally.
+   *
+   * this method include unwrap internally and will throw error if the tensor is in error state.
+   *
+   * @returns Promise resolving to typed array of the tensor data
+   * @throws Error if the tensor is in error state (propagated from the computation graph)
    */
   toData(): Promise<
     | Float32Array // float32 and bfloat16 both return Float32Array

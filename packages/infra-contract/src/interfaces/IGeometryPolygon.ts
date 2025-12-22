@@ -19,6 +19,8 @@ export interface IGeometryPolygon extends Errorable<IGeometryPolygon> {
   /**
    * IoU calculation (requires Clipper)
    * Needs polygon intersection/union which is complex
+   * @returns Intersection over Union value
+   * @throws Error if calculation fails
    */
   iou(other: IGeometryPolygon): number;
 }
