@@ -6,9 +6,38 @@
 
 # Interface: IModelLoader
 
-Defined in: [interfaces/IModel.ts:48](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L48)
+Defined in: [interfaces/IModel.ts:48](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L48)
 
 Model loader interface for loading models from various sources.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class IModelLoader {
+  <<interface>>
+  +getError() Error
+  +isError() boolean
+  +load(source:string, options:ModelLoadOptions) Promise~IModel~
+  +orElse(fallback:IModelLoader) IModelLoader
+  +unwrap() IModelLoader
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class ModelLoadOptions {
+  +executionProvider : string
+}
+
+IModelLoader <|-- Errorable
+
+click IModelLoader href "interfaces/IModelLoader.html" "View IModelLoader documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click ModelLoadOptions href "types/ModelLoadOptions.html" "View ModelLoadOptions documentation"
+```
 
 ## theme_extends
 
@@ -20,7 +49,7 @@ Model loader interface for loading models from various sources.
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -36,7 +65,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -52,7 +81,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **load**(`source`, `options?`): `Promise`\<[`IModel`](IModel.md)\>
 
-Defined in: [interfaces/IModel.ts:55](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L55)
+Defined in: [interfaces/IModel.ts:55](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L55)
 
 Load a model from a file or URL.
 
@@ -82,7 +111,7 @@ Loaded model ready for inference
 
 > **orElse**(`fallback`): `IModelLoader`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -104,7 +133,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **unwrap**(): `IModelLoader`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 

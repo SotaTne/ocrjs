@@ -10,7 +10,7 @@ import type {
   TensorLayout,
   ThresholdType,
 } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 import type { IContour } from './IContour';
 import type { ITensor } from './ITensor';
 
@@ -21,7 +21,7 @@ import type { ITensor } from './ITensor';
  * This interface follows the same principles as ITensor - it's a handle
  * to image data that may reside in different backends (CPU, GPU, WebGL).
  */
-export interface IImage extends Errorable<IImage> {
+export interface IImage extends IErrorable<IImage> {
   /**
    * Image width in pixels.
    */

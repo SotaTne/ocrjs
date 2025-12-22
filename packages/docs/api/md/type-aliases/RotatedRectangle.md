@@ -8,9 +8,26 @@
 
 > **RotatedRectangle** = `object`
 
-Defined in: [types/CommonTypes.ts:71](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L71)
+Defined in: [types/CommonTypes.ts:71](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L71)
 
 Rotated rectangle with center, size, and angle.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class RotatedRectangle {
+  +angle : number
+  +center : Point
+  +size : [width: number, height: number]
+}
+class Point
+
+RotatedRectangle o-- "1" Point
+
+click RotatedRectangle href "types/RotatedRectangle.html" "View RotatedRectangle documentation"
+click Point href "types/Point.html" "View Point documentation"
+```
 
 ## Properties
 
@@ -18,7 +35,7 @@ Rotated rectangle with center, size, and angle.
 
 > **angle**: `number`
 
-Defined in: [types/CommonTypes.ts:74](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L74)
+Defined in: [types/CommonTypes.ts:74](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L74)
 
 ***
 
@@ -26,7 +43,7 @@ Defined in: [types/CommonTypes.ts:74](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > **center**: [`Point`](Point.md)
 
-Defined in: [types/CommonTypes.ts:72](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L72)
+Defined in: [types/CommonTypes.ts:72](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L72)
 
 ***
 
@@ -34,4 +51,4 @@ Defined in: [types/CommonTypes.ts:72](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > **size**: \[`number`, `number`\]
 
-Defined in: [types/CommonTypes.ts:73](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L73)
+Defined in: [types/CommonTypes.ts:73](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L73)

@@ -1,5 +1,5 @@
 import type { Point } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 
 /**
  * Polygon geometry interface
@@ -7,7 +7,7 @@ import type { Errorable } from '../types/Errorable';
  * Methods like offset and iou may require complex geometry libraries
  */
 
-export interface IGeometryPolygon extends Errorable<IGeometryPolygon> {
+export interface IGeometryPolygon extends IErrorable<IGeometryPolygon> {
   readonly points: readonly Point[];
 
   /**

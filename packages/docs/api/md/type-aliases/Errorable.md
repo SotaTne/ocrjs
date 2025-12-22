@@ -8,10 +8,24 @@
 
 > **Errorable**\<`T`\> = `object`
 
-Defined in: [types/Errorable.ts:6](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L6)
+Defined in: [types/Errorable.ts:6](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L6)
 
 Represents a value that may either be a valid result of type T or an Error.
 Provides methods to check for errors and to safely unwrap the value.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+```
 
 ## theme_extended_by
 
@@ -39,7 +53,7 @@ The type of the valid result
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -51,7 +65,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -63,7 +77,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **orElse**(`fallback`): `T`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -81,7 +95,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **unwrap**(): `T`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 

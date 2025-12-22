@@ -2,7 +2,7 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["../*/.docs/docs.json"],
   "readme": "none",
-  "plugin": ["typedoc-plugin-markdown"],
+  "plugin": ["typedoc-plugin-markdown", "./dist/typedoc/typedoc-uml-lite/index.js"],
   "entryPointStrategy": "merge",
   "includeVersion": false,
   "outputs": [

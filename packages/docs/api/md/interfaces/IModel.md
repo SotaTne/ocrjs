@@ -6,13 +6,41 @@
 
 # Interface: IModel
 
-Defined in: [interfaces/IModel.ts:21](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L21)
+Defined in: [interfaces/IModel.ts:21](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L21)
 
 Model interface for framework-agnostic inference.
 Can be implemented using ONNX Runtime, TensorFlow.js, or other frameworks.
 
 This interface provides a unified API regardless of the underlying
 inference framework, allowing engines to work with any model format.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class IModel {
+  <<interface>>
+  +inputNames : string[]
+  +outputNames : string[]
+  +dispose() IModel
+  +forward(inputs:Record~string  ITensor~) Promise~Record~string  ITensor~~
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:IModel) IModel
+  +unwrap() IModel
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+
+IModel <|-- Errorable
+
+click IModel href "interfaces/IModel.html" "View IModel documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+```
 
 ## theme_extends
 
@@ -24,7 +52,7 @@ inference framework, allowing engines to work with any model format.
 
 > `readonly` **inputNames**: readonly `string`[]
 
-Defined in: [interfaces/IModel.ts:32](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L32)
+Defined in: [interfaces/IModel.ts:32](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L32)
 
 Get input names expected by the model.
 
@@ -34,7 +62,7 @@ Get input names expected by the model.
 
 > `readonly` **outputNames**: readonly `string`[]
 
-Defined in: [interfaces/IModel.ts:37](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L37)
+Defined in: [interfaces/IModel.ts:37](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L37)
 
 Get output names provided by the model.
 
@@ -44,7 +72,7 @@ Get output names provided by the model.
 
 > **dispose**(): `IModel`
 
-Defined in: [interfaces/IModel.ts:42](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L42)
+Defined in: [interfaces/IModel.ts:42](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L42)
 
 Clean up resources (model weights, session).
 
@@ -58,7 +86,7 @@ Clean up resources (model weights, session).
 
 > **forward**(`inputs`): `Promise`\<`Record`\<`string`, [`ITensor`](ITensor.md)\>\>
 
-Defined in: [interfaces/IModel.ts:27](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IModel.ts#L27)
+Defined in: [interfaces/IModel.ts:27](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IModel.ts#L27)
 
 Run inference with the model.
 
@@ -82,7 +110,7 @@ Output tensors mapped by name
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -98,7 +126,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -114,7 +142,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **orElse**(`fallback`): `IModel`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -136,7 +164,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **unwrap**(): `IModel`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 

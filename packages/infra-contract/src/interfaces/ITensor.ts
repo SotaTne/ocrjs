@@ -1,5 +1,5 @@
 import type { DType, TensorLayout } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 import type { IImage } from './IImage';
 
 /**
@@ -12,7 +12,7 @@ import type { IImage } from './IImage';
  * All mathematical operations return a new ITensor handle synchronously (building the graph/queue),
  * while raw data access is asynchronous.
  */
-export interface ITensor extends Errorable<ITensor> {
+export interface ITensor extends IErrorable<ITensor> {
   /**
    * shape of the tensor.
    * e.g., [1, 3, 224, 224]

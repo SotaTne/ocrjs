@@ -3,9 +3,9 @@
  * Provides methods to check for errors and to safely unwrap the value.
  * @param T The type of the valid result
  */
-export type Errorable<T> = {
+export interface IErrorable<T> {
   isError(): boolean;
   getError(): Error | null;
   orElse(fallback: T): T;
   unwrap(): T;
-};
+}

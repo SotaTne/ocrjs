@@ -6,10 +6,79 @@
 
 # Interface: ITensorFactory
 
-Defined in: [interfaces/ITensorFactory.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensorFactory.ts#L9)
+Defined in: [interfaces/ITensorFactory.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensorFactory.ts#L9)
 
 Factory interface for creating ITensor instances.
 Implementations provide concrete tensor creation logic.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class ITensorFactory {
+  <<factory>>
+  +fromArray(data:Float32Array~ArrayBufferLike~, shape:number[], dtype:DType) ITensor
+  +getError() Error
+  +isError() boolean
+  +ones(shape:number[], dtype:DType) ITensor
+  +orElse(fallback:ITensorFactory) ITensorFactory
+  +unwrap() ITensorFactory
+  +zeros(shape:number[], dtype:DType) ITensor
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class DType
+class ITensor {
+  <<interface>>
+  +dtype : DType
+  +shape : number[]
+  +add(other:ITensor) ITensor
+  +argmax(axis:number, keepDims:boolean) ITensor
+  +broadcastTo(shape:number[]) ITensor
+  +cast(dtype:DType) ITensor
+  +clip(min:number, max:number) ITensor
+  +concat(others:ITensor[], axis:number) ITensor
+  +dispose() ITensor
+  +div(other:ITensor) ITensor
+  +getError() Error
+  +isError() boolean
+}
+class TensorLayout
+class IImage {
+  <<interface>>
+  +channels : number
+  +colorSpace : ColorSpace
+  +height : number
+  +width : number
+  +adaptiveThreshold(maxValue:number, method:AdaptiveThresholdMethod, blockSize:number, C:number) IImage
+  +bilateralFilter(d:number, sigmaColor:number, sigmaSpace:number) IImage
+  +blur(kernelSize:number) IImage
+  +canny(threshold1:number, threshold2:number) IImage
+  +clone() IImage
+  +connectedComponents() any
+  +convertTo(target:ColorSpace) IImage
+  +crop(rect:Rectangle) IImage
+  +cropPolygon(polygon:Point[]) IImage
+  +dilate(kernelSize:number, iterations:number) IImage
+}
+
+ITensorFactory <|-- Errorable
+ITensorFactory ..> ITensor : <<creates>>
+ITensor <|-- Errorable
+ITensor *-- "1" DType
+IImage <|-- Errorable
+
+click ITensorFactory href "interfaces/ITensorFactory.html" "View ITensorFactory documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click DType href "types/DType.html" "View DType documentation"
+click ITensor href "interfaces/ITensor.html" "View ITensor documentation"
+click TensorLayout href "types/TensorLayout.html" "View TensorLayout documentation"
+click IImage href "interfaces/IImage.html" "View IImage documentation"
+```
 
 ## theme_extends
 
@@ -21,7 +90,7 @@ Implementations provide concrete tensor creation logic.
 
 > **fromArray**(`data`, `shape`, `dtype`): [`ITensor`](ITensor.md)
 
-Defined in: [interfaces/ITensorFactory.ts:30](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensorFactory.ts#L30)
+Defined in: [interfaces/ITensorFactory.ts:30](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensorFactory.ts#L30)
 
 Creates a tensor from an array of data.
 
@@ -55,7 +124,7 @@ Data type
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -71,7 +140,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -87,7 +156,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **ones**(`shape`, `dtype`): [`ITensor`](ITensor.md)
 
-Defined in: [interfaces/ITensorFactory.ts:22](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensorFactory.ts#L22)
+Defined in: [interfaces/ITensorFactory.ts:22](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensorFactory.ts#L22)
 
 Creates a tensor filled with ones.
 
@@ -115,7 +184,7 @@ Data type
 
 > **orElse**(`fallback`): `ITensorFactory`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -137,7 +206,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **unwrap**(): `ITensorFactory`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 
@@ -153,7 +222,7 @@ Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce7178
 
 > **zeros**(`shape`, `dtype`): [`ITensor`](ITensor.md)
 
-Defined in: [interfaces/ITensorFactory.ts:15](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensorFactory.ts#L15)
+Defined in: [interfaces/ITensorFactory.ts:15](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensorFactory.ts#L15)
 
 Creates a tensor filled with zeros.
 

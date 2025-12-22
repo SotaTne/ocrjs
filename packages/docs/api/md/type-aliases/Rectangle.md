@@ -8,9 +8,23 @@
 
 > **Rectangle** = `object`
 
-Defined in: [types/CommonTypes.ts:61](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L61)
+Defined in: [types/CommonTypes.ts:61](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L61)
 
 Axis-aligned rectangle.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class Rectangle {
+  +height : number
+  +width : number
+  +x : number
+  +y : number
+}
+
+click Rectangle href "types/Rectangle.html" "View Rectangle documentation"
+```
 
 ## Properties
 
@@ -18,7 +32,7 @@ Axis-aligned rectangle.
 
 > **height**: `number`
 
-Defined in: [types/CommonTypes.ts:65](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L65)
+Defined in: [types/CommonTypes.ts:65](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L65)
 
 ***
 
@@ -26,7 +40,7 @@ Defined in: [types/CommonTypes.ts:65](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > **width**: `number`
 
-Defined in: [types/CommonTypes.ts:64](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L64)
+Defined in: [types/CommonTypes.ts:64](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L64)
 
 ***
 
@@ -34,7 +48,7 @@ Defined in: [types/CommonTypes.ts:64](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > **x**: `number`
 
-Defined in: [types/CommonTypes.ts:62](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L62)
+Defined in: [types/CommonTypes.ts:62](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L62)
 
 ***
 
@@ -42,4 +56,4 @@ Defined in: [types/CommonTypes.ts:62](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > **y**: `number`
 
-Defined in: [types/CommonTypes.ts:63](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L63)
+Defined in: [types/CommonTypes.ts:63](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L63)

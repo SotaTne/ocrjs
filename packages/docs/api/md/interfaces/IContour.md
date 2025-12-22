@@ -6,10 +6,57 @@
 
 # Interface: IContour
 
-Defined in: [interfaces/IContour.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L8)
+Defined in: [interfaces/IContour.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L8)
 
 Contour representation for shape analysis.
 Represents a continuous curve detected in an image.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class IContour {
+  <<interface>>
+  +points : Point[]
+  +approxPolyDP(epsilon:number, closed:boolean) IContour
+  +area() number
+  +boundingRect() Rectangle
+  +convexHull() IContour
+  +getError() Error
+  +isError() boolean
+  +minAreaRect() RotatedRectangle
+  +orElse(fallback:IContour) IContour
+  +perimeter() number
+  +unwrap() IContour
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class Rectangle {
+  +height : number
+  +width : number
+  +x : number
+  +y : number
+}
+class RotatedRectangle {
+  +angle : number
+  +center : Point
+  +size : [width: number, height: number]
+}
+class Point
+
+IContour <|-- Errorable
+RotatedRectangle o-- "1" Point
+
+click IContour href "interfaces/IContour.html" "View IContour documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click Rectangle href "types/Rectangle.html" "View Rectangle documentation"
+click RotatedRectangle href "types/RotatedRectangle.html" "View RotatedRectangle documentation"
+click Point href "types/Point.html" "View Point documentation"
+```
 
 ## theme_extends
 
@@ -21,7 +68,7 @@ Represents a continuous curve detected in an image.
 
 > `readonly` **points**: readonly [`Point`](../type-aliases/Point.md)[]
 
-Defined in: [interfaces/IContour.ts:12](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L12)
+Defined in: [interfaces/IContour.ts:12](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L12)
 
 Points that make up the contour.
 
@@ -31,7 +78,7 @@ Points that make up the contour.
 
 > **approxPolyDP**(`epsilon`, `closed?`): `IContour`
 
-Defined in: [interfaces/IContour.ts:40](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L40)
+Defined in: [interfaces/IContour.ts:40](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L40)
 
 Approximate contour with fewer points.
 
@@ -59,7 +106,7 @@ Whether the contour is closed
 
 > **area**(): `number`
 
-Defined in: [interfaces/IContour.ts:28](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L28)
+Defined in: [interfaces/IContour.ts:28](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L28)
 
 Calculate contour area.
 
@@ -73,7 +120,7 @@ Calculate contour area.
 
 > **boundingRect**(): [`Rectangle`](../type-aliases/Rectangle.md)
 
-Defined in: [interfaces/IContour.ts:17](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L17)
+Defined in: [interfaces/IContour.ts:17](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L17)
 
 Get axis-aligned bounding rectangle.
 
@@ -87,7 +134,7 @@ Get axis-aligned bounding rectangle.
 
 > **convexHull**(): `IContour`
 
-Defined in: [interfaces/IContour.ts:46](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L46)
+Defined in: [interfaces/IContour.ts:46](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L46)
 
 Compute convex hull of the contour.
 Returns the smallest convex polygon that contains all points.
@@ -102,7 +149,7 @@ Returns the smallest convex polygon that contains all points.
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -118,7 +165,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -134,7 +181,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **minAreaRect**(): [`RotatedRectangle`](../type-aliases/RotatedRectangle.md)
 
-Defined in: [interfaces/IContour.ts:23](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L23)
+Defined in: [interfaces/IContour.ts:23](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L23)
 
 Get minimum area rotated rectangle.
 Useful for oriented text detection.
@@ -149,7 +196,7 @@ Useful for oriented text detection.
 
 > **orElse**(`fallback`): `IContour`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -171,7 +218,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **perimeter**(): `number`
 
-Defined in: [interfaces/IContour.ts:33](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IContour.ts#L33)
+Defined in: [interfaces/IContour.ts:33](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IContour.ts#L33)
 
 Calculate contour perimeter (arc length).
 
@@ -185,7 +232,7 @@ Calculate contour perimeter (arc length).
 
 > **unwrap**(): `IContour`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 

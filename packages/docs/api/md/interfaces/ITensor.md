@@ -6,7 +6,7 @@
 
 # Interface: ITensor
 
-Defined in: [interfaces/ITensor.ts:15](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L15)
+Defined in: [interfaces/ITensor.ts:15](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L15)
 
 Represents a handle to a Tensor computation.
 
@@ -16,6 +16,100 @@ that resides in some backend (CPU, WebGPU, Wasm, etc).
 
 All mathematical operations return a new ITensor handle synchronously (building the graph/queue),
 while raw data access is asynchronous.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class ITensor {
+  <<interface>>
+  +dtype : DType
+  +shape : number[]
+  +add(other:ITensor) ITensor
+  +argmax(axis:number, keepDims:boolean) ITensor
+  +broadcastTo(shape:number[]) ITensor
+  +cast(dtype:DType) ITensor
+  +clip(min:number, max:number) ITensor
+  +concat(others:ITensor[], axis:number) ITensor
+  +dispose() ITensor
+  +div(other:ITensor) ITensor
+  +getError() Error
+  +isError() boolean
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class DType
+class TensorLayout
+class IImage {
+  <<interface>>
+  +channels : number
+  +colorSpace : ColorSpace
+  +height : number
+  +width : number
+  +adaptiveThreshold(maxValue:number, method:AdaptiveThresholdMethod, blockSize:number, C:number) IImage
+  +bilateralFilter(d:number, sigmaColor:number, sigmaSpace:number) IImage
+  +blur(kernelSize:number) IImage
+  +canny(threshold1:number, threshold2:number) IImage
+  +clone() IImage
+  +connectedComponents() any
+  +convertTo(target:ColorSpace) IImage
+  +crop(rect:Rectangle) IImage
+  +cropPolygon(polygon:Point[]) IImage
+  +dilate(kernelSize:number, iterations:number) IImage
+}
+class ColorSpace
+class AdaptiveThresholdMethod
+class Rectangle {
+  +height : number
+  +width : number
+  +x : number
+  +y : number
+}
+class IContour {
+  <<interface>>
+  +points : Point[]
+  +approxPolyDP(epsilon:number, closed:boolean) IContour
+  +area() number
+  +boundingRect() Rectangle
+  +convexHull() IContour
+  +getError() Error
+  +isError() boolean
+  +minAreaRect() RotatedRectangle
+  +orElse(fallback:IContour) IContour
+  +perimeter() number
+  +unwrap() IContour
+}
+class BorderType
+class InterpolationMethod
+class Point
+class ThresholdType
+class AffineTransformMatrix
+
+ITensor <|-- Errorable
+ITensor *-- "1" DType
+IImage <|-- Errorable
+IImage *-- "1" ColorSpace
+IContour <|-- Errorable
+
+click ITensor href "interfaces/ITensor.html" "View ITensor documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click DType href "types/DType.html" "View DType documentation"
+click TensorLayout href "types/TensorLayout.html" "View TensorLayout documentation"
+click IImage href "interfaces/IImage.html" "View IImage documentation"
+click ColorSpace href "types/ColorSpace.html" "View ColorSpace documentation"
+click AdaptiveThresholdMethod href "types/AdaptiveThresholdMethod.html" "View AdaptiveThresholdMethod documentation"
+click Rectangle href "types/Rectangle.html" "View Rectangle documentation"
+click IContour href "interfaces/IContour.html" "View IContour documentation"
+click BorderType href "types/BorderType.html" "View BorderType documentation"
+click InterpolationMethod href "types/InterpolationMethod.html" "View InterpolationMethod documentation"
+click Point href "types/Point.html" "View Point documentation"
+click ThresholdType href "types/ThresholdType.html" "View ThresholdType documentation"
+click AffineTransformMatrix href "types/AffineTransformMatrix.html" "View AffineTransformMatrix documentation"
+```
 
 ## theme_extends
 
@@ -27,7 +121,7 @@ while raw data access is asynchronous.
 
 > `readonly` **dtype**: [`DType`](../type-aliases/DType.md)
 
-Defined in: [interfaces/ITensor.ts:26](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L26)
+Defined in: [interfaces/ITensor.ts:26](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L26)
 
 Data type of the tensor.
 Note: bfloat16 tensors are computed as float32 internally.
@@ -38,7 +132,7 @@ Note: bfloat16 tensors are computed as float32 internally.
 
 > `readonly` **shape**: readonly `number`[]
 
-Defined in: [interfaces/ITensor.ts:20](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L20)
+Defined in: [interfaces/ITensor.ts:20](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L20)
 
 shape of the tensor.
 e.g., [1, 3, 224, 224]
@@ -49,7 +143,7 @@ e.g., [1, 3, 224, 224]
 
 > **add**(`other`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:38](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L38)
+Defined in: [interfaces/ITensor.ts:38](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L38)
 
 Element-wise addition.
 
@@ -71,7 +165,7 @@ Tensor to add
 
 > **argmax**(`axis`, `keepDims?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:146](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L146)
+Defined in: [interfaces/ITensor.ts:146](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L146)
 
 Returns the indices of the maximum values along an axis.
 
@@ -99,7 +193,7 @@ Whether to keep the reduced dimension (default false)
 
 > **broadcastTo**(`shape`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:92](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L92)
+Defined in: [interfaces/ITensor.ts:92](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L92)
 
 Broadcasts the tensor to a new shape.
 
@@ -121,7 +215,7 @@ Target shape
 
 > **cast**(`dtype`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:32](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L32)
+Defined in: [interfaces/ITensor.ts:32](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L32)
 
 Casts the tensor to a different data type.
 
@@ -143,7 +237,7 @@ Target data type
 
 > **clip**(`min`, `max`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:130](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L130)
+Defined in: [interfaces/ITensor.ts:130](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L130)
 
 Clips the values of the tensor to a specified range.
 
@@ -171,7 +265,7 @@ Maximum value
 
 > **concat**(`others`, `axis`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:123](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L123)
+Defined in: [interfaces/ITensor.ts:123](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L123)
 
 Concatenates tensors along a specified axis.
 Note: This is usually a static method in frameworks, but here defined as instance method for chaining/OOP.
@@ -201,7 +295,7 @@ Axis to concatenate along
 
 > **dispose**(): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:201](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L201)
+Defined in: [interfaces/ITensor.ts:201](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L201)
 
 Clean up resources (GPU buffers, Wasm memory) associated with this handle.
 
@@ -215,7 +309,7 @@ Clean up resources (GPU buffers, Wasm memory) associated with this handle.
 
 > **div**(`other`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:56](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L56)
+Defined in: [interfaces/ITensor.ts:56](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L56)
 
 Element-wise division.
 
@@ -237,7 +331,7 @@ Tensor to divide
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -253,7 +347,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -269,7 +363,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **matmul**(`other`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:62](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L62)
+Defined in: [interfaces/ITensor.ts:62](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L62)
 
 Matrix multiplication (Dot product).
 
@@ -291,7 +385,7 @@ Tensor to multiply
 
 > **mean**(`axis?`, `keepDims?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:160](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L160)
+Defined in: [interfaces/ITensor.ts:160](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L160)
 
 Computes the mean value along an axis.
 
@@ -319,7 +413,7 @@ Whether to keep the reduced dimension (default false)
 
 > **mul**(`other`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:50](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L50)
+Defined in: [interfaces/ITensor.ts:50](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L50)
 
 Element-wise multiplication.
 
@@ -341,7 +435,7 @@ Tensor to multiply
 
 > **orElse**(`fallback`): `ITensor`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -363,7 +457,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **permute**(`axes`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:68](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L68)
+Defined in: [interfaces/ITensor.ts:68](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L68)
 
 Permutes the dimensions of the tensor.
 
@@ -385,7 +479,7 @@ New order of dimensions
 
 > **reduceMax**(`axis`, `keepDims?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:153](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L153)
+Defined in: [interfaces/ITensor.ts:153](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L153)
 
 Computes the maximum value along an axis.
 
@@ -413,7 +507,7 @@ Whether to keep the reduced dimension (default false)
 
 > **reshape**(`dims`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:74](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L74)
+Defined in: [interfaces/ITensor.ts:74](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L74)
 
 Reshapes the tensor.
 
@@ -435,7 +529,7 @@ New dimensions
 
 > **scatter**(`indices`, `value`, `axis?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:139](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L139)
+Defined in: [interfaces/ITensor.ts:139](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L139)
 
 Scatter update (pickAndSet).
 Creates a NEW tensor with values updated at specified indices.
@@ -470,7 +564,7 @@ Axis along which to scatter
 
 > **slice**(`starts`, `ends`, `axes?`, `steps?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:102](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L102)
+Defined in: [interfaces/ITensor.ts:102](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L102)
 
 Extracts a slice of the tensor.
 Python equivalent: tensor[starts[0]:ends[0]:steps[0], ...]
@@ -511,7 +605,7 @@ Steps for each dimension (optional, default 1)
 
 > **squeeze**(`dim?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:80](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L80)
+Defined in: [interfaces/ITensor.ts:80](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L80)
 
 Remove single-dimensional entries from the shape.
 
@@ -533,7 +627,7 @@ Dimension to squeeze (optional)
 
 > **std**(`axis?`, `keepDims?`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:167](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L167)
+Defined in: [interfaces/ITensor.ts:167](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L167)
 
 Computes the standard deviation along an axis.
 
@@ -561,7 +655,7 @@ Whether to keep the reduced dimension (default false)
 
 > **sub**(`other`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:44](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L44)
+Defined in: [interfaces/ITensor.ts:44](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L44)
 
 Element-wise subtraction.
 
@@ -583,7 +677,7 @@ Tensor to subtract
 
 > **toData**(): `Promise`\<`Float32Array`\<`ArrayBufferLike`\> \| `Int32Array`\<`ArrayBufferLike`\> \| `Float16Array`\<`ArrayBufferLike`\> \| `Int8Array`\<`ArrayBufferLike`\> \| `Uint8Array`\<`ArrayBufferLike`\> \| `Uint8ClampedArray`\<`ArrayBufferLike`\>\>
 
-Defined in: [interfaces/ITensor.ts:189](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L189)
+Defined in: [interfaces/ITensor.ts:189](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L189)
 
 Transfers the data from the backend to the host (CPU).
 This is the only way to inspect the actual values.
@@ -609,7 +703,7 @@ Error if the tensor is in error state (propagated from the computation graph)
 
 > **toImage**(`layout?`): [`IImage`](IImage.md)
 
-Defined in: [interfaces/ITensor.ts:175](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L175)
+Defined in: [interfaces/ITensor.ts:175](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L175)
 
 Convert tensor to IImage.
 Assumes tensor is in image format (3D or 4D with batch dimension).
@@ -634,7 +728,7 @@ IImage with values normalized to [0, 255] range
 
 > **transpose**(`dim0`, `dim1`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:114](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L114)
+Defined in: [interfaces/ITensor.ts:114](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L114)
 
 Transposes two dimensions of the tensor.
 
@@ -662,7 +756,7 @@ Second dimension
 
 > **unsqueeze**(`dim`): `ITensor`
 
-Defined in: [interfaces/ITensor.ts:86](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/ITensor.ts#L86)
+Defined in: [interfaces/ITensor.ts:86](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/ITensor.ts#L86)
 
 Add a single-dimensional entry to the shape.
 
@@ -684,7 +778,7 @@ Dimension to insert
 
 > **unwrap**(): `ITensor`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 

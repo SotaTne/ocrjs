@@ -3,6 +3,8 @@
     "biomejs.biome",
     "streetsidesoftware.code-spell-checker",
     "xabikos.javascriptsnippets",
-    "DavidAnson.vscode-markdownlint"
+    "DavidAnson.vscode-markdownlint",
+    "bierner.markdown-mermaid",
+    "dbaeumer.vscode-eslint"
   ]
 }

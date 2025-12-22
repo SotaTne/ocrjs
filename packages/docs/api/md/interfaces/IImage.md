@@ -6,13 +6,114 @@
 
 # Interface: IImage
 
-Defined in: [interfaces/IImage.ts:24](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L24)
+Defined in: [interfaces/IImage.ts:24](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L24)
 
 Image representation independent of underlying implementation.
 Can be backed by cv.Mat (OpenCV), Canvas, or other formats.
 
 This interface follows the same principles as ITensor - it's a handle
 to image data that may reside in different backends (CPU, GPU, WebGL).
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class IImage {
+  <<interface>>
+  +channels : number
+  +colorSpace : ColorSpace
+  +height : number
+  +width : number
+  +adaptiveThreshold(maxValue:number, method:AdaptiveThresholdMethod, blockSize:number, C:number) IImage
+  +bilateralFilter(d:number, sigmaColor:number, sigmaSpace:number) IImage
+  +blur(kernelSize:number) IImage
+  +canny(threshold1:number, threshold2:number) IImage
+  +clone() IImage
+  +connectedComponents() any
+  +convertTo(target:ColorSpace) IImage
+  +crop(rect:Rectangle) IImage
+  +cropPolygon(polygon:Point[]) IImage
+  +dilate(kernelSize:number, iterations:number) IImage
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class ColorSpace
+class AdaptiveThresholdMethod
+class Rectangle {
+  +height : number
+  +width : number
+  +x : number
+  +y : number
+}
+class IContour {
+  <<interface>>
+  +points : Point[]
+  +approxPolyDP(epsilon:number, closed:boolean) IContour
+  +area() number
+  +boundingRect() Rectangle
+  +convexHull() IContour
+  +getError() Error
+  +isError() boolean
+  +minAreaRect() RotatedRectangle
+  +orElse(fallback:IContour) IContour
+  +perimeter() number
+  +unwrap() IContour
+}
+class BorderType
+class InterpolationMethod
+class Point
+class ThresholdType
+class TensorLayout
+class DType
+class ITensor {
+  <<interface>>
+  +dtype : DType
+  +shape : number[]
+  +add(other:ITensor) ITensor
+  +argmax(axis:number, keepDims:boolean) ITensor
+  +broadcastTo(shape:number[]) ITensor
+  +cast(dtype:DType) ITensor
+  +clip(min:number, max:number) ITensor
+  +concat(others:ITensor[], axis:number) ITensor
+  +dispose() ITensor
+  +div(other:ITensor) ITensor
+  +getError() Error
+  +isError() boolean
+}
+class AffineTransformMatrix
+class RotatedRectangle {
+  +angle : number
+  +center : Point
+  +size : [width: number, height: number]
+}
+
+IImage <|-- Errorable
+IImage *-- "1" ColorSpace
+IContour <|-- Errorable
+ITensor <|-- Errorable
+ITensor *-- "1" DType
+RotatedRectangle o-- "1" Point
+
+click IImage href "interfaces/IImage.html" "View IImage documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click ColorSpace href "types/ColorSpace.html" "View ColorSpace documentation"
+click AdaptiveThresholdMethod href "types/AdaptiveThresholdMethod.html" "View AdaptiveThresholdMethod documentation"
+click Rectangle href "types/Rectangle.html" "View Rectangle documentation"
+click IContour href "interfaces/IContour.html" "View IContour documentation"
+click BorderType href "types/BorderType.html" "View BorderType documentation"
+click InterpolationMethod href "types/InterpolationMethod.html" "View InterpolationMethod documentation"
+click Point href "types/Point.html" "View Point documentation"
+click ThresholdType href "types/ThresholdType.html" "View ThresholdType documentation"
+click TensorLayout href "types/TensorLayout.html" "View TensorLayout documentation"
+click DType href "types/DType.html" "View DType documentation"
+click ITensor href "interfaces/ITensor.html" "View ITensor documentation"
+click AffineTransformMatrix href "types/AffineTransformMatrix.html" "View AffineTransformMatrix documentation"
+click RotatedRectangle href "types/RotatedRectangle.html" "View RotatedRectangle documentation"
+```
 
 ## theme_extends
 
@@ -24,7 +125,7 @@ to image data that may reside in different backends (CPU, GPU, WebGL).
 
 > `readonly` **channels**: `number`
 
-Defined in: [interfaces/IImage.ts:41](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L41)
+Defined in: [interfaces/IImage.ts:41](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L41)
 
 Number of channels.
 - 1: Grayscale
@@ -37,7 +138,7 @@ Number of channels.
 
 > `readonly` **colorSpace**: [`ColorSpace`](../type-aliases/ColorSpace.md)
 
-Defined in: [interfaces/IImage.ts:43](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L43)
+Defined in: [interfaces/IImage.ts:43](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L43)
 
 ***
 
@@ -45,7 +146,7 @@ Defined in: [interfaces/IImage.ts:43](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > `readonly` **height**: `number`
 
-Defined in: [interfaces/IImage.ts:33](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L33)
+Defined in: [interfaces/IImage.ts:33](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L33)
 
 Image height in pixels.
 
@@ -55,7 +156,7 @@ Image height in pixels.
 
 > `readonly` **width**: `number`
 
-Defined in: [interfaces/IImage.ts:28](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L28)
+Defined in: [interfaces/IImage.ts:28](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L28)
 
 Image width in pixels.
 
@@ -65,7 +166,7 @@ Image width in pixels.
 
 > **adaptiveThreshold**(`maxValue`, `method`, `blockSize`, `C`): `IImage`
 
-Defined in: [interfaces/IImage.ts:95](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L95)
+Defined in: [interfaces/IImage.ts:95](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L95)
 
 Apply adaptive threshold.
 Better than simple threshold for images with varying illumination.
@@ -106,7 +207,7 @@ Constant subtracted from mean/weighted mean
 
 > **bilateralFilter**(`d`, `sigmaColor`, `sigmaSpace`): `IImage`
 
-Defined in: [interfaces/IImage.ts:136](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L136)
+Defined in: [interfaces/IImage.ts:136](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L136)
 
 Apply bilateral filter (edge-preserving smoothing).
 
@@ -140,7 +241,7 @@ Filter sigma in coordinate space
 
 > **blur**(`kernelSize`): `IImage`
 
-Defined in: [interfaces/IImage.ts:142](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L142)
+Defined in: [interfaces/IImage.ts:142](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L142)
 
 Apply simple averaging blur.
 
@@ -162,7 +263,7 @@ Size of the kernel
 
 > **canny**(`threshold1`, `threshold2`): `IImage`
 
-Defined in: [interfaces/IImage.ts:251](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L251)
+Defined in: [interfaces/IImage.ts:251](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L251)
 
 Detect edges using Canny edge detector.
 
@@ -190,7 +291,7 @@ Second threshold for hysteresis
 
 > **clone**(): `IImage`
 
-Defined in: [interfaces/IImage.ts:307](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L307)
+Defined in: [interfaces/IImage.ts:307](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L307)
 
 Clone the image (create a copy).
 
@@ -204,7 +305,7 @@ Clone the image (create a copy).
 
 > **connectedComponents**(): `object`
 
-Defined in: [interfaces/IImage.ts:207](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L207)
+Defined in: [interfaces/IImage.ts:207](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L207)
 
 Label connected components in binary image.
 
@@ -228,7 +329,7 @@ Object with labels (IImage) and count (number of components)
 
 > **convertTo**(`target`): `IImage`
 
-Defined in: [interfaces/IImage.ts:68](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L68)
+Defined in: [interfaces/IImage.ts:68](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L68)
 
 Convert to a different color space.
 Source color space is automatically determined from the current colorSpace property.
@@ -259,7 +360,7 @@ const bgr = grayImage.convertTo('BGR');  // GRAY -> BGR
 
 > **crop**(`rect`): `IImage`
 
-Defined in: [interfaces/IImage.ts:153](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L153)
+Defined in: [interfaces/IImage.ts:153](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L153)
 
 Crop image by axis-aligned rectangle.
 
@@ -281,7 +382,7 @@ Rectangle to crop
 
 > **cropPolygon**(`polygon`): `IImage`
 
-Defined in: [interfaces/IImage.ts:161](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L161)
+Defined in: [interfaces/IImage.ts:161](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L161)
 
 Crop image by polygon (with perspective transform).
 Useful for extracting rotated text regions.
@@ -306,7 +407,7 @@ Cropped and perspective-corrected image
 
 > **dilate**(`kernelSize`, `iterations?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:214](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L214)
+Defined in: [interfaces/IImage.ts:214](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L214)
 
 Apply morphological dilation.
 
@@ -334,7 +435,7 @@ Number of times dilation is applied (default 1)
 
 > **dispose**(): `IImage`
 
-Defined in: [interfaces/IImage.ts:312](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L312)
+Defined in: [interfaces/IImage.ts:312](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L312)
 
 Clean up resources (GPU buffers, memory).
 
@@ -348,7 +449,7 @@ Clean up resources (GPU buffers, memory).
 
 > **drawContours**(`contours`, `color`, `thickness?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:197](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L197)
+Defined in: [interfaces/IImage.ts:197](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L197)
 
 Draw contours on image.
 
@@ -382,7 +483,7 @@ Line thickness (-1 for filled)
 
 > **erode**(`kernelSize`, `iterations?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:221](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L221)
+Defined in: [interfaces/IImage.ts:221](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L221)
 
 Apply morphological erosion.
 
@@ -410,7 +511,7 @@ Number of times erosion is applied (default 1)
 
 > **findContours**(): [`IContour`](IContour.md)[]
 
-Defined in: [interfaces/IImage.ts:189](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L189)
+Defined in: [interfaces/IImage.ts:189](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L189)
 
 Find contours in binary image.
 Image should be binary (thresholded) before calling this.
@@ -431,7 +532,7 @@ Error if the image is not single-channel binary
 
 > **gaussianBlur**(`kernelSize`, `sigma?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:122](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L122)
+Defined in: [interfaces/IImage.ts:122](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L122)
 
 Apply Gaussian blur to reduce noise.
 
@@ -459,7 +560,7 @@ Gaussian standard deviation (0 = auto-calculate)
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -475,7 +576,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **inRange**(`lower`, `upper`): `IImage`
 
-Defined in: [interfaces/IImage.ts:108](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L108)
+Defined in: [interfaces/IImage.ts:108](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L108)
 
 Threshold image based on color range.
 Pixels within [lower, upper] range become white, others black.
@@ -504,7 +605,7 @@ Upper boundary array (per channel)
 
 > **invert**(): `IImage`
 
-Defined in: [interfaces/IImage.ts:147](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L147)
+Defined in: [interfaces/IImage.ts:147](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L147)
 
 Invert image colors (negative).
 
@@ -518,7 +619,7 @@ Invert image colors (negative).
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -534,7 +635,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **laplacian**(`ksize?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:265](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L265)
+Defined in: [interfaces/IImage.ts:265](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L265)
 
 Apply Laplacian operator for edge detection.
 
@@ -556,7 +657,7 @@ Aperture size (must be odd and positive)
 
 > **medianBlur**(`kernelSize`): `IImage`
 
-Defined in: [interfaces/IImage.ts:128](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L128)
+Defined in: [interfaces/IImage.ts:128](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L128)
 
 Apply median blur to remove salt-and-pepper noise.
 
@@ -578,7 +679,7 @@ Size of the kernel (must be odd)
 
 > **morphClose**(`kernelSize`, `iterations?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:237](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L237)
+Defined in: [interfaces/IImage.ts:237](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L237)
 
 Apply morphological closing (dilation followed by erosion).
 Closes small black holes.
@@ -607,7 +708,7 @@ Number of times to apply (default 1)
 
 > **morphGradient**(`kernelSize`): `IImage`
 
-Defined in: [interfaces/IImage.ts:244](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L244)
+Defined in: [interfaces/IImage.ts:244](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L244)
 
 Apply morphological gradient (dilation - erosion).
 Extracts object boundaries.
@@ -630,7 +731,7 @@ Size of the structuring element
 
 > **morphOpen**(`kernelSize`, `iterations?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:229](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L229)
+Defined in: [interfaces/IImage.ts:229](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L229)
 
 Apply morphological opening (erosion followed by dilation).
 Removes small white noise.
@@ -659,7 +760,7 @@ Number of times to apply (default 1)
 
 > **normalize**(`alpha`, `beta`): `IImage`
 
-Defined in: [interfaces/IImage.ts:115](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L115)
+Defined in: [interfaces/IImage.ts:115](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L115)
 
 Normalize image values to specified range.
 
@@ -687,7 +788,7 @@ Upper bound of output range
 
 > **orElse**(`fallback`): `IImage`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -709,7 +810,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **pad**(`top`, `right`, `bottom`, `left`, `borderType?`, `value?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:276](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L276)
+Defined in: [interfaces/IImage.ts:276](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L276)
 
 Pad image with border.
 
@@ -761,7 +862,7 @@ Border value for constant border (default 0)
 
 > **resize**(`width`, `height`, `interpolation?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:51](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L51)
+Defined in: [interfaces/IImage.ts:51](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L51)
 
 Resize image to specified dimensions.
 
@@ -795,7 +896,7 @@ Interpolation method (default 'linear')
 
 > **rotate**(`angle`): `IImage`
 
-Defined in: [interfaces/IImage.ts:167](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L167)
+Defined in: [interfaces/IImage.ts:167](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L167)
 
 Rotate image by specified angle.
 
@@ -817,7 +918,7 @@ Rotation angle (90, 180, or 270 degrees)
 
 > **rotateArbitrary**(`angle`, `center?`, `scale?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:175](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L175)
+Defined in: [interfaces/IImage.ts:175](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L175)
 
 Rotate image by arbitrary angle.
 
@@ -851,7 +952,7 @@ Scale factor (default: 1.0)
 
 > **sobel**(`dx`, `dy`, `ksize?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:259](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L259)
+Defined in: [interfaces/IImage.ts:259](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L259)
 
 Apply Sobel operator for edge detection.
 
@@ -885,7 +986,7 @@ Size of extended Sobel kernel (1, 3, 5, or 7)
 
 > **threshold**(`threshold`, `maxValue`, `type?`): `IImage`
 
-Defined in: [interfaces/IImage.ts:85](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L85)
+Defined in: [interfaces/IImage.ts:85](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L85)
 
 Apply threshold to image.
 Typically used on grayscale images.
@@ -920,7 +1021,7 @@ Threshold type (default 'binary')
 
 > **toGrayscale**(): `IImage`
 
-Defined in: [interfaces/IImage.ts:76](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L76)
+Defined in: [interfaces/IImage.ts:76](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L76)
 
 Convert image to grayscale.
 Convenience method equivalent to convertTo('GRAY').
@@ -937,7 +1038,7 @@ If image is already grayscale, returns a clone.
 
 > **toImageData**(): `Promise`\<`ImageData`\>
 
-Defined in: [interfaces/IImage.ts:292](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L292)
+Defined in: [interfaces/IImage.ts:292](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L292)
 
 Convert to ImageData for display in browser.
 Always returns RGBA format (4 channels).
@@ -958,7 +1059,7 @@ Error if the image cannot be converted to ImageData
 
 > **toTensor**(`layout?`, `dtype?`, `normalize?`): [`ITensor`](ITensor.md)
 
-Defined in: [interfaces/IImage.ts:302](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L302)
+Defined in: [interfaces/IImage.ts:302](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L302)
 
 Convert to ITensor for model inference.
 
@@ -994,7 +1095,7 @@ Tensor with shape [1, C, H, W] (NCHW) or [1, H, W, C] (NHWC)
 
 > **unwrap**(): `IImage`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 
@@ -1010,7 +1111,7 @@ Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce7178
 
 > **warpAffine**(`matrix`): `IImage`
 
-Defined in: [interfaces/IImage.ts:181](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IImage.ts#L181)
+Defined in: [interfaces/IImage.ts:181](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IImage.ts#L181)
 
 Apply affine transformation.
 

@@ -2,7 +2,7 @@
   "extends": "@ocrjs/config-tsconfig/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "scripts",
+    "rootDir": "src",
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationDir": "dist",

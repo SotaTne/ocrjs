@@ -6,7 +6,7 @@
 
 # Abstract Class: ErrorableBase
 
-Defined in: [base/ErrorableBase.ts:1](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L1)
+Defined in: [base/ErrorableBase.ts:1](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L1)
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: [base/ErrorableBase.ts:1](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > `protected` **getErrorBase**(): `Error` \| `null`
 
-Defined in: [base/ErrorableBase.ts:16](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L16)
+Defined in: [base/ErrorableBase.ts:16](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L16)
 
 #### Returns
 
@@ -36,7 +36,7 @@ Defined in: [base/ErrorableBase.ts:16](https://github.com/SotaTne/ocrjs/blob/ce7
 
 > `protected` **guard**\<`T`\>(`fn`): `T`
 
-Defined in: [base/ErrorableBase.ts:35](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L35)
+Defined in: [base/ErrorableBase.ts:35](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L35)
 
 安全な short-circuit + error capture
 
@@ -65,7 +65,7 @@ Defined in: [base/ErrorableBase.ts:35](https://github.com/SotaTne/ocrjs/blob/ce7
 
 > `protected` **isErrorBase**(): `boolean`
 
-Defined in: [base/ErrorableBase.ts:12](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L12)
+Defined in: [base/ErrorableBase.ts:12](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L12)
 
 #### Returns
 
@@ -77,7 +77,7 @@ Defined in: [base/ErrorableBase.ts:12](https://github.com/SotaTne/ocrjs/blob/ce7
 
 > `protected` **orElseBase**\<`T`\>(`this`, `fallback`): `T`
 
-Defined in: [base/ErrorableBase.ts:25](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L25)
+Defined in: [base/ErrorableBase.ts:25](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L25)
 
 #### Type Parameters
 
@@ -105,7 +105,7 @@ Defined in: [base/ErrorableBase.ts:25](https://github.com/SotaTne/ocrjs/blob/ce7
 
 > `protected` **setError**(`error`): `void`
 
-Defined in: [base/ErrorableBase.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L8)
+Defined in: [base/ErrorableBase.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L8)
 
 エラーを設定（protected）
 ※ constructor / guard 内でのみ使うこと
@@ -126,7 +126,7 @@ Defined in: [base/ErrorableBase.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71
 
 > `protected` **unwrapBase**(): `this`
 
-Defined in: [base/ErrorableBase.ts:20](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/base/ErrorableBase.ts#L20)
+Defined in: [base/ErrorableBase.ts:20](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/base/ErrorableBase.ts#L20)
 
 #### Returns
 

@@ -8,7 +8,7 @@
 
 > **DType** = `"float32"` \| `"float16"` \| `"bfloat16"` \| `"int32"` \| `"int8"` \| `"uint8"` \| `"bool"`
 
-Defined in: [types/CommonTypes.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/CommonTypes.ts#L8)
+Defined in: [types/CommonTypes.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/CommonTypes.ts#L8)
 
 Supported data types for Tensor operations.
 Includes quantization types (int8, float16) for optimization.

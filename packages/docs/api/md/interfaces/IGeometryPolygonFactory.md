@@ -6,10 +6,66 @@
 
 # Interface: IGeometryPolygonFactory
 
-Defined in: [interfaces/IGeometryPolygonFactory.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L9)
+Defined in: [interfaces/IGeometryPolygonFactory.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L9)
 
 Factory interface for creating IGeometryPolygon instances.
 Implementations provide concrete polygon creation logic.
+
+## UML Class Diagram
+
+```mermaid
+classDiagram
+class IGeometryPolygonFactory {
+  <<factory>>
+  +fromPoints(points:Point[]) IGeometryPolygon
+  +fromRectangle(rect:Rectangle) IGeometryPolygon
+  +fromRotatedRectangle(rect:RotatedRectangle) IGeometryPolygon
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:IGeometryPolygonFactory) IGeometryPolygonFactory
+  +unwrap() IGeometryPolygonFactory
+}
+class Errorable {
+  +getError() Error
+  +isError() boolean
+  +orElse(fallback:any) any
+  +unwrap() any
+}
+class IGeometryPolygon {
+  <<interface>>
+  +points : Point[]
+  +getError() Error
+  +iou(other:IGeometryPolygon) number
+  +isError() boolean
+  +offset(distance:number) IGeometryPolygon
+  +orElse(fallback:IGeometryPolygon) IGeometryPolygon
+  +unwrap() IGeometryPolygon
+}
+class Rectangle {
+  +height : number
+  +width : number
+  +x : number
+  +y : number
+}
+class RotatedRectangle {
+  +angle : number
+  +center : Point
+  +size : [width: number, height: number]
+}
+class Point
+
+IGeometryPolygonFactory <|-- Errorable
+IGeometryPolygonFactory ..> IGeometryPolygon : <<creates>>
+IGeometryPolygon <|-- Errorable
+RotatedRectangle o-- "1" Point
+
+click IGeometryPolygonFactory href "interfaces/IGeometryPolygonFactory.html" "View IGeometryPolygonFactory documentation"
+click Errorable href "types/Errorable.html" "View Errorable documentation"
+click IGeometryPolygon href "interfaces/IGeometryPolygon.html" "View IGeometryPolygon documentation"
+click Rectangle href "types/Rectangle.html" "View Rectangle documentation"
+click RotatedRectangle href "types/RotatedRectangle.html" "View RotatedRectangle documentation"
+click Point href "types/Point.html" "View Point documentation"
+```
 
 ## theme_extends
 
@@ -21,7 +77,7 @@ Implementations provide concrete polygon creation logic.
 
 > **fromPoints**(`points`): [`IGeometryPolygon`](IGeometryPolygon.md)
 
-Defined in: [interfaces/IGeometryPolygonFactory.ts:15](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L15)
+Defined in: [interfaces/IGeometryPolygonFactory.ts:15](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L15)
 
 Creates a polygon from an array of points.
 
@@ -43,7 +99,7 @@ Array of points defining the polygon vertices
 
 > **fromRectangle**(`rect`): [`IGeometryPolygon`](IGeometryPolygon.md)
 
-Defined in: [interfaces/IGeometryPolygonFactory.ts:21](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L21)
+Defined in: [interfaces/IGeometryPolygonFactory.ts:21](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L21)
 
 Creates a rectangular polygon from a Rectangle.
 
@@ -65,7 +121,7 @@ Rectangle definition
 
 > **fromRotatedRectangle**(`rect`): [`IGeometryPolygon`](IGeometryPolygon.md)
 
-Defined in: [interfaces/IGeometryPolygonFactory.ts:27](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L27)
+Defined in: [interfaces/IGeometryPolygonFactory.ts:27](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/interfaces/IGeometryPolygonFactory.ts#L27)
 
 Creates a polygon from a RotatedRectangle.
 
@@ -87,7 +143,7 @@ Rotated rectangle definition
 
 > **getError**(): `Error` \| `null`
 
-Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L8)
+Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L8)
 
 #### Returns
 
@@ -103,7 +159,7 @@ Defined in: [types/Errorable.ts:8](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **isError**(): `boolean`
 
-Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L7)
+Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L7)
 
 #### Returns
 
@@ -119,7 +175,7 @@ Defined in: [types/Errorable.ts:7](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **orElse**(`fallback`): `IGeometryPolygonFactory`
 
-Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L9)
+Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L9)
 
 #### Parameters
 
@@ -141,7 +197,7 @@ Defined in: [types/Errorable.ts:9](https://github.com/SotaTne/ocrjs/blob/ce71785
 
 > **unwrap**(): `IGeometryPolygonFactory`
 
-Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/ce71785e55e3b44fa470587d87b426410977d29d/packages/infra-contract/src/types/Errorable.ts#L10)
+Defined in: [types/Errorable.ts:10](https://github.com/SotaTne/ocrjs/blob/0b7f8fd574ea61267d8c3b63c1f0e7b7bba13fe0/packages/infra-contract/src/types/Errorable.ts#L10)
 
 #### Returns
 
