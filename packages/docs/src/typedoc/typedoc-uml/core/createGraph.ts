@@ -46,14 +46,11 @@ function isDeclarationReflectionLike(x: unknown): x is DeclarationReflection {
 }
 
 export type CreateGraphOptions = {
-  /** メソッド引数型も dependency 関係として含める（ノイズ増えやすいのでデフォルト false 推奨） */
-  includeMethodTypes?: boolean;
   /** TypeAlias の場合、association/dependency/メソッド解析を打ち切る */
   stopAtTypeAlias?: boolean;
 };
 
 const DEFAULT_OPTS: Required<CreateGraphOptions> = {
-  includeMethodTypes: false,
   stopAtTypeAlias: true,
 };
 
@@ -111,16 +108,15 @@ export function createGraphIndex(
         console.log('association', c.name);
       }
 
-      // メソッド引数型（ノイズ増えがちなのでオプション）
-      if (options.includeMethodTypes) {
-        const sigs = Array.isArray(c?.signatures) ? c.signatures : [];
-        for (const s of sigs) {
-          const params = Array.isArray(s?.parameters) ? s.parameters : [];
-          for (const p of params) {
-            if (p?.type) {
-              addEdgesFromType(p.type, 'dependency');
-              console.log('dependency', p.name);
-            }
+      // メソッド引数型（dependency）
+
+      const sigs = Array.isArray(c?.signatures) ? c.signatures : [];
+      for (const s of sigs) {
+        const params = Array.isArray(s?.parameters) ? s.parameters : [];
+        for (const p of params) {
+          if (p?.type) {
+            addEdgesFromType(p.type, 'dependency');
+            console.log('dependency', p.name);
           }
         }
       }
