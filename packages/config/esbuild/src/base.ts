@@ -2,9 +2,10 @@ import type { BuildOptions } from 'esbuild';
 
 export const shared: BuildOptions = {
   sourcemap: true,
-  minify: false,
   bundle: true,
+  minify: false,
   target: 'esnext',
   platform: 'neutral',
   format: 'esm',
+  packages: 'external',
 };
