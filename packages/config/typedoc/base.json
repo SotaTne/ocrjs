@@ -1,4 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPointStrategy": "resolve"
+  "entryPointStrategy": "resolve",
+  "excludePrivateClassFields": false,
+  "excludePrivate": false,
+  "excludeProtected": false
 }
