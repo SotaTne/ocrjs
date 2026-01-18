@@ -81,7 +81,22 @@
               }
             ]
           }
-        }
+        },
+        "useArrayLiterals": "error",
+        "noExportedImports": "error",
+        "noEnum": "error",
+        "noMagicNumbers": "error",
+        "noNamespace": "error",
+        "noNonNullAssertion": "error",
+        "noParameterProperties": "error",
+        "noProcessEnv": "error",
+        "noSubstr": "error",
+        "noUnusedTemplateLiteral": "error",
+        "noYodaExpression": "error",
+        "useAtIndex": "error",
+        "useConsistentArrayType": "error",
+        "useConsistentBuiltinInstantiation": "error",
+        "useDefaultSwitchClause": "error"
       }
     }
   },

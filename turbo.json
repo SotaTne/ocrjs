@@ -28,7 +28,10 @@
     },
     "docs:merge": {
       "dependsOn": ["docs:json"],
-      "inputs": ["$TURBO_ROOT$/packages/*/.docs/docs.json"],
+      "inputs": [
+        "$TURBO_ROOT$/packages/*/.docs/docs.json",
+        "$TURBO_ROOT$/packages/infra-adapters/*/.docs/docs.json"
+      ],
       "outputs": ["api/html/**", "api/md/**"]
     },
     "dev": {
