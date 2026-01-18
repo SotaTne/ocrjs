@@ -1,12 +1,12 @@
 import type { ColorSpace } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 import type { IImage } from './IImage';
 
 /**
  * Factory interface for creating IImage instances.
  * Implementations provide concrete image creation logic.
  */
-export interface IImageFactory extends Errorable<IImageFactory> {
+export interface IImageFactory extends IErrorable<IImageFactory> {
   /**
    * Creates a zero-filled image (black image).
    * @param width Image width in pixels

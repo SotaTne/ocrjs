@@ -1,15 +1,5 @@
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 import type { ITensor } from './ITensor';
-
-/**
- * Options for loading a model.
- */
-export type ModelLoadOptions = {
-  /** Execution provider preference (e.g., 'cpu', 'webgpu', 'wasm') */
-  executionProvider?: string;
-  /** Additional framework-specific options */
-  [key: string]: unknown;
-};
 
 /**
  * Model interface for framework-agnostic inference.
@@ -18,7 +8,7 @@ export type ModelLoadOptions = {
  * This interface provides a unified API regardless of the underlying
  * inference framework, allowing engines to work with any model format.
  */
-export interface IModel extends Errorable<IModel> {
+export interface IModel extends IErrorable<IModel> {
   /**
    * Run inference with the model.
    * @param inputs Input tensors mapped by name
@@ -40,17 +30,4 @@ export interface IModel extends Errorable<IModel> {
    * Clean up resources (model weights, session).
    */
   dispose(): IModel;
-}
-
-/**
- * Model loader interface for loading models from various sources.
- */
-export interface IModelLoader extends Errorable<IModelLoader> {
-  /**
-   * Load a model from a file or URL.
-   * @param source Model file path or URL
-   * @param options Optional loading configuration
-   * @returns Loaded model ready for inference
-   */
-  load(source: string, options?: ModelLoadOptions): Promise<IModel>;
 }

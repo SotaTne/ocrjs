@@ -77,7 +77,12 @@ export type RotatedRectangle = {
 /**
  * Border type for morphological operations.
  */
-export type BorderType = 'constant' | 'replicate' | 'reflect' | 'wrap' | 'reflect101';
+export type BorderType =
+  | 'constant'
+  | 'replicate'
+  | 'reflect'
+  | 'wrap'
+  | 'reflect101';
 
 /**
  * Adaptive threshold method.
@@ -92,3 +97,13 @@ export type AffineTransformMatrix = readonly [
   readonly [number, number, number],
   readonly [number, number, number],
 ];
+
+/**
+ * Options for loading a model.
+ */
+export type ModelLoadOptions = {
+  /** Execution provider preference (e.g., 'cpu', 'webgpu', 'wasm') */
+  executionProvider?: string;
+  /** Additional framework-specific options */
+  [key: string]: unknown;
+};

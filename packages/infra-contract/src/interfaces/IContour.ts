@@ -1,11 +1,11 @@
 import type { Point, Rectangle, RotatedRectangle } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 
 /**
  * Contour representation for shape analysis.
  * Represents a continuous curve detected in an image.
  */
-export interface IContour extends Errorable<IContour> {
+export interface IContour extends IErrorable<IContour> {
   /**
    * Points that make up the contour.
    */

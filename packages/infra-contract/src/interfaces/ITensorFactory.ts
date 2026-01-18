@@ -1,12 +1,12 @@
 import type { DType } from '../types/CommonTypes';
-import type { Errorable } from '../types/Errorable';
+import type { IErrorable } from '../types/Errorable';
 import type { ITensor } from './ITensor';
 
 /**
  * Factory interface for creating ITensor instances.
  * Implementations provide concrete tensor creation logic.
  */
-export interface ITensorFactory extends Errorable<ITensorFactory> {
+export interface ITensorFactory extends IErrorable<ITensorFactory> {
   /**
    * Creates a tensor filled with zeros.
    * @param shape Tensor shape
