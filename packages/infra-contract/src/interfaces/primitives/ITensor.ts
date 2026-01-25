@@ -1,5 +1,5 @@
-import type { DType, TensorLayout } from '../types/CommonTypes';
-import type { IErrorable } from '../types/Errorable';
+import type { DType, TensorLayout } from '../../types/CommonTypes';
+import type { IErrorable } from '../../types/Errorable';
 import type { IImage } from './IImage';
 
 /**

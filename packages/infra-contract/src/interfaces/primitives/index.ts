@@ -1,0 +1,9 @@
+export type { IContour } from './IContour';
+export type { IGeometryPolygon } from './IGeometryPolygon';
+export type { IGeometryPolygonFactory } from './IGeometryPolygonFactory';
+export type { IImage } from './IImage';
+export type { IImageFactory } from './IImageFactory';
+export type { IModel } from './IModel';
+export type { IModelLoader } from './IModelLoader';
+export type { ITensor } from './ITensor';
+export type { ITensorFactory } from './ITensorFactory';

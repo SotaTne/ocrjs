@@ -1,5 +1,5 @@
-import type { ModelLoadOptions } from '../types/CommonTypes';
-import type { IErrorable } from '../types/Errorable';
+import type { ModelLoadOptions } from '../../types/CommonTypes';
+import type { IErrorable } from '../../types/Errorable';
 import type { IModel } from './IModel';
 
 /**

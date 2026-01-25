@@ -1,5 +1,9 @@
-import type { Point, Rectangle, RotatedRectangle } from '../types/CommonTypes';
-import type { IErrorable } from '../types/Errorable';
+import type {
+  Point,
+  Rectangle,
+  RotatedRectangle,
+} from '../../types/CommonTypes';
+import type { IErrorable } from '../../types/Errorable';
 import type { IGeometryPolygon } from './IGeometryPolygon';
 
 /**

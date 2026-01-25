@@ -9,8 +9,8 @@ import type {
   Rectangle,
   TensorLayout,
   ThresholdType,
-} from '../types/CommonTypes';
-import type { IErrorable } from '../types/Errorable';
+} from '../../types/CommonTypes';
+import type { IErrorable } from '../../types/Errorable';
 import type { IContour } from './IContour';
 import type { ITensor } from './ITensor';
 

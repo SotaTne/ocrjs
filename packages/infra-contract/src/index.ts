@@ -1,12 +1,4 @@
 export { ErrorableBase } from './base/ErrorableBase';
-export type { IContour } from './interfaces/IContour';
-export type { IGeometryPolygon } from './interfaces/IGeometryPolygon';
-export type { IGeometryPolygonFactory } from './interfaces/IGeometryPolygonFactory';
-export type { IImage } from './interfaces/IImage';
-export type { IImageFactory } from './interfaces/IImageFactory';
-export type { IModel } from './interfaces/IModel';
-export type { IModelLoader } from './interfaces/IModelLoader';
-export type { ITensor } from './interfaces/ITensor';
-export type { ITensorFactory } from './interfaces/ITensorFactory';
+export * from './interfaces/primitives/index';
 export type * from './types/CommonTypes';
 export type * from './types/Errorable';

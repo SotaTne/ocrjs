@@ -1,4 +1,4 @@
-import type { IErrorable } from '../types/Errorable';
+import type { IErrorable } from '../../types/Errorable';
 import type { ITensor } from './ITensor';
 
 /**
