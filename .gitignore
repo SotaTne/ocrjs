@@ -31,9 +31,7 @@ dist
 
 # API docs
 packages/docs/api/html/**
-
-# allow markdown
-!packages/docs/api/md/**
+packages/docs/api/md/**
 
 # Debug
 npm-debug.log*
