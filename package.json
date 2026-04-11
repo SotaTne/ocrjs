@@ -5,6 +5,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "test": "turbo run test",
     "docs:json": "turbo run docs:json",
     "docs:merge": "turbo run docs:merge",
     "lint": "biome lint && eslint",
