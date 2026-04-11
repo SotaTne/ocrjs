@@ -3,6 +3,7 @@
   "extends": "./base.json",
   "compilerOptions": {
     "moduleResolution": "nodenext",
+    "types": ["node"],
     "module": "nodenext"
   }
 }
