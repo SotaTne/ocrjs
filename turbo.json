@@ -16,8 +16,7 @@
         "$TURBO_ROOT$/packages/config/**",
         "!**/node_modules/**",
         "!**/dist/**",
-        "!**/.turbo/**",
-        "!**/.vitest/**"
+        "!**/.turbo/**"
       ]
     },
     "lint": {
@@ -36,8 +35,7 @@
         "$TURBO_ROOT$/packages/config/**",
         "!**/node_modules/**",
         "!**/dist/**",
-        "!**/.turbo/**",
-        "!**/.vitest/**"
+        "!**/.turbo/**"
       ],
       "outputs": [".docs/docs.json"]
     },

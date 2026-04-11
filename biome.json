@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
 
   "vcs": {
     "enabled": true,
@@ -106,6 +106,44 @@
       "quoteStyle": "single"
     }
   },
+
+  "overrides": [
+    {
+      "includes": ["**/*.test.ts", "**/*.test.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noMagicNumbers": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/docs/src/typedoc/typedoc-uml-lite/**/*.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noMagicNumbers": "off",
+            "useDefaultSwitchClause": "off",
+            "noNonNullAssertion": "off",
+            "useNamingConvention": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noImplicitAnyLet": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedFunctionParameters": "off",
+            "noUnusedPrivateClassMembers": "off"
+          },
+          "complexity": {
+            "useOptionalChain": "off"
+          }
+        }
+      }
+    }
+  ],
 
   "assist": {
     "enabled": true,

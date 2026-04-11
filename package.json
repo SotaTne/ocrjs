@@ -19,7 +19,7 @@
     "fast-glob": "^3.3.3",
     "jiti": "^2.6.1",
     "turbo": "latest",
-    "typescript": "latest"
+    "typescript": "6"
   },
   "packageManager": "pnpm@10.8.1"
 }

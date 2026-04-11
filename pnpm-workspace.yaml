@@ -1,5 +1,8 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "packages/config/*"
-  - "packages/infra-adapters/*"
+  - apps/*
+  - packages/*
+  - packages/config/*
+  - packages/infra-adapters/*
+
+ignoredBuiltDependencies:
+  - esbuild

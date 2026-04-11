@@ -16,13 +16,12 @@ export default defineConfig([
     strict: false,
   }),
   {
-    files: ['apps/**/*.{ts,tsx}', 'packages/**/*.{ts,tsx}'],
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/.turbo/**',
-      'eslint.config.*',
+    files: [
+      'apps/**/*.{ts,tsx}',
+      'packages/**/*.{ts,tsx}',
+      'eslint.config.mts',
     ],
+    ignores: ['**/node_modules/**', '**/dist/**', '**/.turbo/**'],
     languageOptions: {
       parser: tsParser,
       parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
@@ -32,7 +31,7 @@ export default defineConfig([
         'error',
         {
           selector:
-            "PropertyDefinition[accessibility='private'], TSParameterProperty[accessibility='private'], MethodDefinition[accessibility='private']",
+            "ClassBody > PropertyDefinition[accessibility='private'], ClassBody > MethodDefinition[accessibility='private'], MethodDefinition[kind='constructor'] TSParameterProperty[accessibility='private']",
           message:
             'Use ECMAScript private fields (#name) instead of TypeScript `private` fields.',
         },

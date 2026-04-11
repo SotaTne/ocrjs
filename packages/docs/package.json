@@ -19,12 +19,14 @@
     "@ocrjs/config-tsconfig": "workspace:*",
     "@types/node": "^25.0.3",
     "commander": "^14.0.2",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.28.0",
     "http-server": "^14.1.1",
-    "mdts": "^0.14.0",
-    "typedoc": "^0.28.15",
-    "typedoc-plugin-markdown": "^4.9.0",
-    "vitest": "latest"
+    "mdts": "^0.18.0",
+    "typedoc": "^0.28.18",
+    "typedoc-plugin-markdown": "^4.11.0",
+    "vitest": "latest",
+    "@mermaid-js/parser": "^1.1.0",
+    "typescript": "latest"
   },
   "license": "Apache-2.0"
 }

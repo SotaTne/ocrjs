@@ -23,7 +23,7 @@
     "@ocrjs/config-esbuild": "workspace:*",
     "@ocrjs/config-tsconfig": "workspace:*",
     "@ocrjs/config-typedoc": "workspace:*",
-    "typedoc": "^0.28.15",
+    "typedoc": "^0.28.18",
     "esbuild": "^0.27.2",
     "typescript": "latest"
   }
