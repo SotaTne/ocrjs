@@ -1,0 +1,23 @@
+{
+  "name": "@ocrjs/scripts",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc -p tsconfig.json && node esbuild.config.mjs"
+  },
+  "devDependencies": {
+    "@ocrjs/config-esbuild": "workspace:*",
+    "@ocrjs/config-tsconfig": "workspace:*",
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0",
+    "typescript": "latest",
+    "vitest": "latest"
+  },
+  "bin": {
+    "normalize-typedoc-json": "./dist/normalize-typedoc-json.js"
+  },
+  "license": "Apache-2.0"
+}

@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node esbuild.config.mjs",
     "test": "echo 'test'",
-    "docs:json": "typedoc"
+    "docs:json": "typedoc && normalize-typedoc-json --merge-base packages/docs --workspace-base"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "@ocrjs/config-esbuild": "workspace:*",
     "@ocrjs/config-tsconfig": "workspace:*",
     "@ocrjs/config-typedoc": "workspace:*",
+    "@ocrjs/scripts": "workspace:*",
     "typedoc": "^0.28.18",
     "esbuild": "^0.27.2",
     "typescript": "latest"
