@@ -9,6 +9,12 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./interfaces/primitives": {
+      "types": "./dist/interfaces/primitives/index.d.ts"
+    },
+    "./types/CommonTypes": {
+      "types": "./dist/types/CommonTypes.d.ts"
     }
   },
   "type": "module",
