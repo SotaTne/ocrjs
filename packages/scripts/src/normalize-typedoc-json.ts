@@ -90,7 +90,9 @@ function normalizeTypedocJson(
 
     for (const [key, value] of Object.entries(entries)) {
       if (typeof value !== 'string') {
-        warnings.push(`Skipped files.entries.${key} because it is not a string`);
+        warnings.push(
+          `Skipped files.entries.${key} because it is not a string`,
+        );
         continue;
       }
 
@@ -159,7 +161,9 @@ export function main(options: MainOptions = {}): number {
       );
     }
     if (result.changes.length === 0) {
-      onWarn(`[normalize-typedoc-json] No entries were updated in ${result.jsonPath}`);
+      onWarn(
+        `[normalize-typedoc-json] No entries were updated in ${result.jsonPath}`,
+      );
     }
     for (const warning of result.warnings) {
       onWarn(`[normalize-typedoc-json] ${warning}`);
