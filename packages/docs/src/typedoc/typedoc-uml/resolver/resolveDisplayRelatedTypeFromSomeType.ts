@@ -76,6 +76,34 @@ export function resolveDisplayRelatedTypeFromSomeType(
 
       return resolveRelatedTypeFromSomeType(typeNode);
 
+    case DOC_TYPE_NAMES.namedTupleMember:
+      if (isSomeType(typeNode.element)) {
+        return resolveDisplayRelatedTypeFromSomeType(typeNode.element);
+      }
+
+      return resolveRelatedTypeFromSomeType(typeNode);
+
+    case DOC_TYPE_NAMES.query:
+      if (isSomeType(typeNode.queryType)) {
+        return resolveDisplayRelatedTypeFromSomeType(typeNode.queryType);
+      }
+
+      return resolveRelatedTypeFromSomeType(typeNode);
+
+    case DOC_TYPE_NAMES.typeOperator:
+      if (isSomeType(typeNode.target)) {
+        return resolveDisplayRelatedTypeFromSomeType(typeNode.target);
+      }
+
+      return resolveRelatedTypeFromSomeType(typeNode);
+
+    case DOC_TYPE_NAMES.indexedAccess:
+      if (isSomeType(typeNode.objectType)) {
+        return resolveDisplayRelatedTypeFromSomeType(typeNode.objectType);
+      }
+
+      return resolveRelatedTypeFromSomeType(typeNode);
+
     case DOC_TYPE_NAMES.union:
     case DOC_TYPE_NAMES.intersection:
       return new RelatedTypeNode(

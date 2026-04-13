@@ -53,4 +53,31 @@ describe('resolveDisplayRelatedTypeFromSomeType', () => {
     expect(node.children[1]?.node.text).toBe('Array');
     expect(node.children[1]?.node.children[0]?.node.text).toBe('Entry');
   });
+
+  it('readonly Point[] を display 用に Array<Point> として保持する', () => {
+    const node = resolveDisplayRelatedTypeFromSomeType({
+      type: 'typeOperator',
+      operator: 'readonly',
+      target: {
+        type: 'array',
+        elementType: {
+          type: 'reference',
+          name: 'Point',
+          reflection: { id: 2 },
+        },
+      },
+    } as SomeType);
+
+    expect(node.kind).toBe(RELATED_TYPE_KINDS.generic);
+    expect(node.text).toBe('Array');
+    expect(node.children).toEqual([
+      {
+        role: RELATED_TYPE_CHILD_ROLES.typeArg,
+        node: expect.objectContaining({
+          kind: RELATED_TYPE_KINDS.reference,
+          text: 'Point',
+        }),
+      },
+    ]);
+  });
 });
