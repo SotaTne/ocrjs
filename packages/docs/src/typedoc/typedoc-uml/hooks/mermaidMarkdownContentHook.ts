@@ -21,6 +21,7 @@ export function createMermaidMarkdownContentHook(
       resolveReflectionLink: (reflectionId) => linkStore.resolve(reflectionId),
     }, {
       escapeAngleBracketsInMemberTypes: true,
+      escapeAngleBracketsInLabels: true,
     });
     if (mermaid === '') {
       return '';

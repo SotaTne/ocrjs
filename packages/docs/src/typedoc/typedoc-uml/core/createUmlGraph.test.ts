@@ -229,6 +229,76 @@ describe('createUmlGraph', () => {
     });
   });
 
+  it('method を member と return type association edge に変換する', () => {
+    const targets = new Set([1, 2]);
+    const modelById = new Map<number, unknown>([
+      [
+        1,
+        {
+          id: 1,
+          name: 'Schedule',
+          kindOf: createKindOf(ReflectionKind.Class),
+          flags: {},
+          children: [
+            {
+              name: 'getEntries',
+              flags: {},
+              signatures: [
+                {
+                  parameters: [
+                    {
+                      name: 'limit',
+                      type: {
+                        type: 'intrinsic',
+                        name: 'number',
+                      },
+                    },
+                  ],
+                  type: {
+                    type: 'reference',
+                    name: 'EntryCollection',
+                    reflection: { id: 2 },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      [
+        2,
+        {
+          id: 2,
+          name: 'EntryCollection',
+          kindOf: createKindOf(ReflectionKind.Class),
+          flags: {},
+          children: [],
+        },
+      ],
+    ]);
+
+    const graph = createUmlGraph(targets, modelById);
+    const schedule = graph.getNode('Schedule');
+
+    expect(schedule?.members).toContainEqual(
+      expect.objectContaining({
+        name: 'getEntries(limit : number)',
+        visibility: UML_VISIBILITY.public,
+        typeNode: expect.objectContaining({
+          text: 'EntryCollection',
+        }),
+      }),
+    );
+    expect(graph.edges).toContainEqual({
+      from: 'Schedule',
+      to: 'EntryCollection',
+      kind: UML_EDGE_KINDS.association,
+      memberName: 'getEntries',
+      visibility: UML_VISIBILITY.public,
+      multiplicity: MULTIPLICITY.exactlyOne,
+    });
+  });
+
   it('Array<Foo> のような property は Foo への association として解決する', () => {
     const targets = new Set([1, 2]);
     const modelById = new Map<number, unknown>([

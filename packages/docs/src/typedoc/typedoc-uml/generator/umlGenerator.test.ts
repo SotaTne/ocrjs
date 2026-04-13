@@ -170,6 +170,67 @@ class uml_Typed["Typed"] {
 uml_Schedule <|-- uml_Typed`);
   });
 
+  it('Markdown 用には node label と click label の < > も escape できる', () => {
+    const graph = new UmlGraphModel();
+    graph.addNode({
+      id: 'ErrorableBase<E>',
+      reflectionId: 1,
+      name: 'ErrorableBase<E>',
+      kind: UML_NODE_KINDS.abstractClass,
+      members: [],
+    });
+
+    const mermaid = renderUmlGraphAsMermaidClassDiagram(
+      graph,
+      {
+        currentPageAbsoluteLink: 'README.md',
+        resolveReflectionLink() {
+          return {
+            absoluteLink: 'README.md',
+            pageUrl: 'README.md',
+          };
+        },
+      },
+      {
+        escapeAngleBracketsInLabels: true,
+      },
+    );
+
+    expect(mermaid).toBe(`classDiagram
+class uml_ErrorableBase_E_["ErrorableBase&lt;E&gt;"] {
+  <<abstract>>
+}
+
+click uml_ErrorableBase_E_ href "README.md" "ErrorableBase&lt;E&gt;"`);
+  });
+
+  it('method member を classDiagram の member 行として出力できる', () => {
+    const graph = new UmlGraphModel();
+    graph.addNode({
+      id: 'Schedule',
+      name: 'Schedule',
+      kind: UML_NODE_KINDS.class,
+      members: [
+        {
+          name: 'getEntries(limit : number)',
+          visibility: UML_VISIBILITY.public,
+          typeNode: new RelatedTypeNode(
+            RELATED_TYPE_KINDS.reference,
+            'EntryCollection',
+            MULTIPLICITY.exactlyOne,
+          ),
+        },
+      ],
+    });
+
+    const mermaid = renderUmlGraphAsMermaidClassDiagram(graph);
+
+    expect(mermaid).toBe(`classDiagram
+class uml_Schedule["Schedule"] {
+  +getEntries(limit : number) EntryCollection
+}`);
+  });
+
   it('class / interface / abstract / intermediate を含む diagram を構文として成立させる', async () => {
     const graph = new UmlGraphModel();
     graph.addNode({

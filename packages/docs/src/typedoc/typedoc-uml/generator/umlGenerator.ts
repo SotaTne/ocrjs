@@ -22,6 +22,7 @@ export type UmlLinkOptions = {
 
 export type UmlRenderOptions = {
   escapeAngleBracketsInMemberTypes?: boolean;
+  escapeAngleBracketsInLabels?: boolean;
 };
 
 function sanitizeMermaidAlias(value: string): string {
@@ -37,6 +38,20 @@ function escapeMemberTypeText(
   options: UmlRenderOptions | undefined,
 ): string {
   if (options?.escapeAngleBracketsInMemberTypes !== true) {
+    return value;
+  }
+
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+function escapeLabelText(
+  value: string,
+  options: UmlRenderOptions | undefined,
+): string {
+  if (options?.escapeAngleBracketsInLabels !== true) {
     return value;
   }
 
@@ -104,7 +119,9 @@ function renderNodeStereotype(node: UmlNode): string | undefined {
 
 function renderNode(node: UmlNode, renderOptions?: UmlRenderOptions): string[] {
   const alias = sanitizeMermaidAlias(node.id);
-  const lines: string[] = [`class ${alias}["${node.name}"] {`];
+  const lines: string[] = [
+    `class ${alias}["${escapeLabelText(node.name, renderOptions)}"] {`,
+  ];
   const stereotype = renderNodeStereotype(node);
 
   if (stereotype) {
@@ -112,8 +129,9 @@ function renderNode(node: UmlNode, renderOptions?: UmlRenderOptions): string[] {
   }
 
   for (const member of node.members) {
+    const isMethod = member.name.includes('(');
     const suffix = member.typeNode
-      ? ` : ${renderRelatedType(member.typeNode, renderOptions)}`
+      ? `${isMethod ? ' ' : ' : '}${renderRelatedType(member.typeNode, renderOptions)}`
       : '';
     lines.push(`  ${member.visibility}${member.name}${suffix}`);
   }
@@ -125,6 +143,7 @@ function renderNode(node: UmlNode, renderOptions?: UmlRenderOptions): string[] {
 function renderNodeClick(
   node: UmlNode,
   linkOptions?: UmlLinkOptions,
+  renderOptions?: UmlRenderOptions,
 ): string | undefined {
   if (linkOptions === undefined || node.reflectionId === undefined) {
     return undefined;
@@ -139,7 +158,7 @@ function renderNodeClick(
     linkOptions.currentPageAbsoluteLink,
     link.absoluteLink,
   );
-  return `click ${sanitizeMermaidAlias(node.id)} href "${escapeMermaidString(relativeLink)}" "${escapeMermaidString(node.name)}"`;
+  return `click ${sanitizeMermaidAlias(node.id)} href "${escapeMermaidString(relativeLink)}" "${escapeMermaidString(escapeLabelText(node.name, renderOptions))}"`;
 }
 
 function renderEdge(edge: UmlEdge): string {
@@ -190,7 +209,7 @@ export function renderUmlGraphAsMermaidClassDiagram(
   }
 
   const clickLines = graph.nodeList
-    .map((node) => renderNodeClick(node, linkOptions))
+    .map((node) => renderNodeClick(node, linkOptions, renderOptions))
     .filter((line): line is string => line !== undefined);
 
   if (clickLines.length > 0) {

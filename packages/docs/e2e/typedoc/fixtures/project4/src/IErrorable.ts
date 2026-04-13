@@ -1,0 +1,2 @@
+export interface IErrorable<T> {
+}

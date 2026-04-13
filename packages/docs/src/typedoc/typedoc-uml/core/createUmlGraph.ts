@@ -39,6 +39,22 @@ function hasSomeType(
   return !!type && typeof type === 'object' && 'type' in type;
 }
 
+function hasSignatures(
+  value: unknown,
+): value is {
+  name: string;
+  flags?: unknown;
+  signatures: Array<{ type?: SomeType }>;
+} {
+  if (!value || typeof value !== 'object') return false;
+  if (!('name' in value) || typeof value.name !== 'string') return false;
+  if (!('signatures' in value) || !Array.isArray(value.signatures)) {
+    return false;
+  }
+
+  return value.signatures.length > 0;
+}
+
 function toUmlNodeKind(model: DeclarationReflection): UmlNodeKind | undefined {
   if (model.kindOf(ReflectionKind.Interface)) {
     return UML_NODE_KINDS.interface;
@@ -69,6 +85,34 @@ function toVisibility(raw: unknown): UmlVisibility {
   }
 
   return UML_VISIBILITY.public;
+}
+
+function collectTypeParameterNames(typeParameters: unknown): string[] {
+  if (!Array.isArray(typeParameters)) {
+    return [];
+  }
+
+  return typeParameters.flatMap((parameter) => {
+    if (
+      parameter &&
+      typeof parameter === 'object' &&
+      'name' in parameter &&
+      typeof parameter.name === 'string'
+    ) {
+      return [parameter.name];
+    }
+
+    return [];
+  });
+}
+
+function renderTypeParameterList(typeParameters: unknown): string {
+  const names = collectTypeParameterNames(typeParameters);
+  return names.length === 0 ? '' : `<${names.join(', ')}>`;
+}
+
+function getDeclarationDisplayName(raw: DeclarationReflection): string {
+  return `${raw.name}${renderTypeParameterList(raw.typeParameters)}`;
 }
 
 function mergeMultiplicity(
@@ -189,11 +233,43 @@ function createGraphMembers(raw: DeclarationReflection) {
   const members = [];
   const children = Array.isArray(raw.children) ? raw.children : [];
   for (const child of children) {
-    if (!hasSomeType(child)) continue;
+    if (child?.name === 'constructor') continue;
+
+    if (hasSomeType(child)) {
+      members.push({
+        name: child.name,
+        visibility: toVisibility(child.flags),
+        typeNode: resolveDisplayRelatedTypeFromSomeType(child.type),
+      });
+      continue;
+    }
+
+    if (!hasSignatures(child)) continue;
+    const signature = child.signatures[0];
+    if (!signature?.type) continue;
+    const parameters = Array.isArray(signature.parameters)
+      ? signature.parameters.reduce<string[]>((acc, parameter) => {
+          if (
+            !parameter ||
+            typeof parameter !== 'object' ||
+            typeof parameter.name !== 'string' ||
+            !parameter.type
+          ) {
+            return acc;
+          }
+
+          acc.push(
+            `${parameter.name} : ${renderRelatedTypeNode(
+              resolveDisplayRelatedTypeFromSomeType(parameter.type),
+            )}`,
+          );
+          return acc;
+        }, [])
+      : [];
     members.push({
-      name: child.name,
+      name: `${child.name}${renderTypeParameterList(signature.typeParameters)}(${parameters.join(', ')})`,
       visibility: toVisibility(child.flags),
-      typeNode: resolveDisplayRelatedTypeFromSomeType(child.type),
+      typeNode: resolveDisplayRelatedTypeFromSomeType(signature.type),
     });
   }
 
@@ -204,7 +280,9 @@ function ensureDeclarationNode(
   graph: UmlGraphModel,
   raw: DeclarationReflection,
 ): void {
-  if (graph.getNode(raw.name)) {
+  const displayName = getDeclarationDisplayName(raw);
+
+  if (graph.getNode(displayName)) {
     return;
   }
 
@@ -214,9 +292,9 @@ function ensureDeclarationNode(
   }
 
   graph.addNode({
-    id: raw.name,
+    id: displayName,
     reflectionId: raw.id,
-    name: raw.name,
+    name: displayName,
     kind,
     members: createGraphMembers(raw),
   });
@@ -232,7 +310,7 @@ function resolveGraphNodeId(
   ) {
     const model = modelById.get(node.id);
     if (isDeclarationReflectionLike(model)) {
-      return model.name;
+      return getDeclarationDisplayName(model);
     }
   }
 
@@ -257,7 +335,7 @@ function addIntermediateTypeEdges(
       ensureDeclarationNode(graph, targetModel);
       graph.addEdge({
         from: fromId,
-        to: targetModel.name,
+        to: getDeclarationDisplayName(targetModel),
         kind: rootKind,
       });
       return;
@@ -357,7 +435,7 @@ function addPropertyAssociation(
 
     graph.addEdge({
       from: fromId,
-      to: targetModel.name,
+      to: getDeclarationDisplayName(targetModel),
       kind: UML_EDGE_KINDS.association,
       memberName,
       visibility,
@@ -414,9 +492,9 @@ export function createUmlGraph(
     if (!kind) continue;
 
     graph.addNode({
-      id: raw.name,
+      id: getDeclarationDisplayName(raw),
       reflectionId: id,
-      name: raw.name,
+      name: getDeclarationDisplayName(raw),
       kind,
       members: createGraphMembers(raw),
     });
@@ -426,7 +504,7 @@ export function createUmlGraph(
     const raw = modelById.get(id);
     if (!isDeclarationReflectionLike(raw)) continue;
 
-    const from = raw.name;
+    const from = getDeclarationDisplayName(raw);
 
     if (Array.isArray(raw.extendedTypes)) {
       for (const typeNode of raw.extendedTypes) {
@@ -463,9 +541,26 @@ export function createUmlGraph(
 
     const children = Array.isArray(raw.children) ? raw.children : [];
     for (const child of children) {
-      if (!child?.type) continue;
+      if (child?.name === 'constructor') continue;
 
-      const typeNode = resolveRelatedTypeFromSomeType(child.type);
+      if (child?.type) {
+        const typeNode = resolveRelatedTypeFromSomeType(child.type);
+        addPropertyAssociation(
+          graph,
+          from,
+          child.name,
+          toVisibility(child.flags),
+          typeNode,
+          modelById,
+        );
+        continue;
+      }
+
+      if (!hasSignatures(child)) continue;
+      const signature = child.signatures[0];
+      if (!signature?.type) continue;
+
+      const typeNode = resolveRelatedTypeFromSomeType(signature.type);
       addPropertyAssociation(
         graph,
         from,
