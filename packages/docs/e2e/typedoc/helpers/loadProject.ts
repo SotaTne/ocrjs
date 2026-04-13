@@ -10,9 +10,12 @@ const UML_PLUGIN_PATH = path.resolve(
 );
 
 export type LoadProjectOptions = {
-  fixtureName: string;
+  fixtureName?: string;
+  fixtureDir?: string;
+  tsconfigPath?: string;
   entryPoints?: string[];
   emit?: 'both' | 'docs' | 'none';
+  includeMarkdownPlugin?: boolean;
   plugin?: string[];
   extraOptions?: Record<string, unknown>;
 };
@@ -35,21 +38,37 @@ function createTempDir(): string {
 export async function loadProject(
   options: LoadProjectOptions,
 ): Promise<LoadedProject> {
-  const fixtureDir = path.join(FIXTURES_DIR, options.fixtureName);
-  const tsconfig = path.join(fixtureDir, 'tsconfig.json');
+  const fixtureDir =
+    options.fixtureDir ??
+    (options.fixtureName === undefined
+      ? undefined
+      : path.join(FIXTURES_DIR, options.fixtureName));
+  const tsconfig =
+    options.tsconfigPath ??
+    (fixtureDir === undefined
+      ? undefined
+      : path.join(fixtureDir, 'tsconfig.json'));
+  if (tsconfig === undefined) {
+    throw new Error(
+      'Either fixtureName, fixtureDir, or tsconfigPath is required.',
+    );
+  }
+  const resolvedFixtureDir = fixtureDir ?? path.dirname(tsconfig);
   const outDir = path.join(createTempDir(), 'out');
 
   const app = await Application.bootstrapWithPlugins(
     {
       entryPoints: options.entryPoints ?? [
-        path.join(fixtureDir, 'src/index.ts'),
+        path.join(resolvedFixtureDir, 'src/index.ts'),
       ],
       tsconfig,
       out: outDir,
       emit: options.emit ?? 'both',
       plugin: [
+        ...(options.includeMarkdownPlugin === false
+          ? []
+          : ['typedoc-plugin-markdown']),
         UML_PLUGIN_PATH,
-        'typedoc-plugin-markdown',
         ...(options.plugin ?? []),
       ],
       ...(options.extraOptions ?? {}),
@@ -60,13 +79,13 @@ export async function loadProject(
   const project = await app.convert();
   if (!project) {
     throw new Error(
-      `Failed to convert fixture project: ${options.fixtureName}`,
+      `Failed to convert fixture project: ${options.fixtureName ?? fixtureDir}`,
     );
   }
 
   return {
     app,
-    fixtureDir,
+    fixtureDir: resolvedFixtureDir,
     outDir,
     project,
     tmpDir: path.dirname(outDir),

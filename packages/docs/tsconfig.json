@@ -2,10 +2,20 @@
   "extends": "@ocrjs/config-tsconfig/node.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationDir": "dist",
+    "types": ["node"]
   },
-  "exclude": ["node_modules", "dist", "src/typedoc/typedoc-uml-lite/"],
+  "include": [
+    "e2e/**/*.ts",
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/typedoc/typedoc-uml-lite/",
+    "e2e/typedoc/fixtures/**"
+  ],
 }

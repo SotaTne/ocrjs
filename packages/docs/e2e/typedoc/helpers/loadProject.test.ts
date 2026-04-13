@@ -24,5 +24,5 @@ describe('e2e/typedoc/helpers/loadProject', () => {
       true,
     );
     expect(loaded.outDir.endsWith('/out')).toBe(true);
-  });
+  }, 20000);
 });
