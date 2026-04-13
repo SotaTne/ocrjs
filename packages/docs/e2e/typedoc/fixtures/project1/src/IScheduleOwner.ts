@@ -1,5 +1,5 @@
-import type { Entry } from './Entry.js';
+import type { EntryCollection } from './EntryCollection.js';
 
 export interface IScheduleOwner {
-  entries: Array<Entry>;
+  getEntries(): EntryCollection;
 }
