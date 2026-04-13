@@ -1,7 +1,7 @@
-import { type Reflection, ReflectionKind } from "typedoc";
-import type { MarkdownRendererEvent } from "typedoc-plugin-markdown";
-import type { PluginOptions } from "../options.js";
-import type { ReflectionID } from "../types.js";
+import { type Reflection, ReflectionKind } from 'typedoc';
+import type { MarkdownRendererEvent } from 'typedoc-plugin-markdown';
+import type { PluginOptions } from '../options.js';
+import type { ReflectionID } from '../types.js';
 
 /**
  * レンダリング対象ページから UML 生成に使う reflection を収集します。
@@ -34,9 +34,9 @@ export function collectModelsFromPages(
 
   for (const page of event.pages) {
     const m = page.model;
-    if (!m || typeof m !== "object") continue;
-    if (!("id" in m) || typeof m.id !== "number") continue;
-    if (!("kindOf" in m) || typeof m.kindOf !== "function") continue;
+    if (!m || typeof m !== 'object') continue;
+    if (!('id' in m) || typeof m.id !== 'number') continue;
+    if (!('kindOf' in m) || typeof m.kindOf !== 'function') continue;
 
     if (
       !m.kindOf([
