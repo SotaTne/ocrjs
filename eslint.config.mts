@@ -21,7 +21,13 @@ export default defineConfig([
       'packages/**/*.{ts,tsx}',
       'eslint.config.mts',
     ],
-    ignores: ['**/node_modules/**', '**/dist/**', '**/.turbo/**'],
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.turbo/**',
+      '**/.docs/**',
+      '**/typedoc/e2e/fixtures/**',
+    ],
     languageOptions: {
       parser: tsParser,
       parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },

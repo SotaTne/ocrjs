@@ -119,26 +119,15 @@
       }
     },
     {
-      "includes": ["packages/docs/src/typedoc/typedoc-uml-lite/**/*.{ts,tsx}"],
+      "includes": ["packages/docs/e2e/typedoc/fixtures/**/*.ts"],
       "linter": {
         "rules": {
           "style": {
+            "useNamingConvention": "off",
+            "useArrayLiterals": "off",
             "noMagicNumbers": "off",
-            "useDefaultSwitchClause": "off",
             "noNonNullAssertion": "off",
-            "useNamingConvention": "off"
-          },
-          "suspicious": {
-            "noExplicitAny": "off",
-            "noImplicitAnyLet": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off",
-            "noUnusedFunctionParameters": "off",
-            "noUnusedPrivateClassMembers": "off"
-          },
-          "complexity": {
-            "useOptionalChain": "off"
+            "useConsistentArrayType": "off"
           }
         }
       }
