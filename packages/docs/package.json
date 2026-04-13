@@ -12,6 +12,7 @@
     "build": "tsc -p tsconfig.json && node esbuild.config.mjs",
     "docs:merge": "typedoc",
     "prev-api:md": "mdts ./api/md/ -p 8180",
+    "prev-e2e:md": "node dist/cli/index.js prev-e2e:md --port 8552",
     "prev-api:html": "http-server ./api/html/ -p 8181"
   },
   "devDependencies": {
@@ -21,12 +22,13 @@
     "commander": "^14.0.2",
     "esbuild": "^0.28.0",
     "http-server": "^14.1.1",
-    "mdts": "^0.18.0",
+    "jsdom": "^26.1.0",
+    "mdts": "0.18.0",
+    "mermaid": "^11.14.0",
     "typedoc": "^0.28.18",
     "typedoc-plugin-markdown": "^4.11.0",
-    "vitest": "latest",
-    "@mermaid-js/parser": "^1.1.0",
-    "typescript": "latest"
+    "typescript": "latest",
+    "vitest": "latest"
   },
   "license": "Apache-2.0"
 }
