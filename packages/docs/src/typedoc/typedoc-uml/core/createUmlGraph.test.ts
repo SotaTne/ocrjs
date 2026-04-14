@@ -106,13 +106,13 @@ describe('createUmlGraph', () => {
 
     expect(graph.edges).toEqual([
       {
-        from: 'OnnxWebModelLoader',
-        to: 'ErrorableBase',
+        from: 'ErrorableBase',
+        to: 'OnnxWebModelLoader',
         kind: UML_EDGE_KINDS.extends,
       },
       {
-        from: 'OnnxWebModelLoader',
-        to: 'IModelLoader',
+        from: 'IModelLoader',
+        to: 'OnnxWebModelLoader',
         kind: UML_EDGE_KINDS.implements,
       },
     ]);
@@ -165,8 +165,8 @@ describe('createUmlGraph', () => {
       members: [],
     });
     expect(graph.edges).toContainEqual({
-      from: 'A',
-      to: 'Array<Hoge>',
+      from: 'Array<Hoge>',
+      to: 'A',
       kind: UML_EDGE_KINDS.extends,
     });
     expect(graph.edges).toContainEqual({
@@ -297,6 +297,63 @@ describe('createUmlGraph', () => {
       visibility: UML_VISIBILITY.public,
       multiplicity: MULTIPLICITY.exactlyOne,
     });
+  });
+
+  it('self 参照の member は表示するが self edge は作らない', () => {
+    const targets = new Set([1]);
+    const modelById = new Map<number, unknown>([
+      [
+        1,
+        {
+          id: 1,
+          name: 'SelfRef',
+          kindOf: createKindOf(ReflectionKind.Class),
+          flags: {},
+          children: [
+            {
+              name: 'selfValue',
+              flags: {},
+              type: {
+                type: 'reference',
+                name: 'SelfRef',
+                reflection: { id: 1 },
+              },
+            },
+            {
+              name: 'getSelf',
+              flags: {},
+              signatures: [
+                {
+                  parameters: [],
+                  type: {
+                    type: 'reference',
+                    name: 'SelfRef',
+                    reflection: { id: 1 },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    ]);
+
+    const graph = createUmlGraph(targets, modelById);
+    const selfRef = graph.getNode('SelfRef');
+
+    expect(selfRef?.members).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'selfValue',
+        }),
+        expect.objectContaining({
+          name: 'getSelf()',
+        }),
+      ]),
+    );
+    expect(
+      graph.edges.some((edge) => edge.from === 'SelfRef' && edge.to === 'SelfRef'),
+    ).toBe(false);
   });
 
   it('Array<Foo> のような property は Foo への association として解決する', () => {
@@ -456,8 +513,8 @@ describe('createUmlGraph', () => {
       members: [],
     });
     expect(graph.edges).toContainEqual({
-      from: 'Derived',
-      to: 'Any<T>',
+      from: 'Any<T>',
+      to: 'Derived',
       kind: UML_EDGE_KINDS.extends,
     });
     expect(graph.edges).toContainEqual({
@@ -531,8 +588,8 @@ describe('createUmlGraph', () => {
     expect(graph.getNode('Result<Option<Number>, Error>')).toBeDefined();
     expect(graph.getNode('Option<Number>')).toBeDefined();
     expect(graph.edges).toContainEqual({
-      from: 'Derived',
-      to: 'Result<Option<Number>, Error>',
+      from: 'Result<Option<Number>, Error>',
+      to: 'Derived',
       kind: UML_EDGE_KINDS.extends,
     });
     expect(graph.edges).toContainEqual({
@@ -548,6 +605,78 @@ describe('createUmlGraph', () => {
     expect(graph.edges).toContainEqual({
       from: 'Option<Number>',
       to: 'Number',
+      kind: UML_EDGE_KINDS.contains,
+    });
+  });
+
+  it('IErrorable<IContour> のような generic instance は generic declaration にも結びつく', () => {
+    const targets = new Set([1, 2]);
+    const modelById = new Map<number, unknown>([
+      [
+        1,
+        {
+          id: 1,
+          name: 'IContour',
+          kindOf: createKindOf(ReflectionKind.Interface),
+          flags: {},
+          children: [],
+          extendedTypes: [
+            {
+              type: 'reference',
+              name: 'IErrorable',
+              reflection: { id: 2 },
+              typeArguments: [
+                {
+                  type: 'reference',
+                  name: 'IContour',
+                  reflection: { id: 1 },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      [
+        2,
+        {
+          id: 2,
+          name: 'IErrorable',
+          kindOf: createKindOf(ReflectionKind.Interface),
+          flags: {},
+          typeParameters: [{ name: 'T' }],
+          children: [],
+        },
+      ],
+    ]);
+
+    const graph = createUmlGraph(targets, modelById);
+
+    expect(graph.getNode('IErrorable<IContour>')).toEqual({
+      id: 'IErrorable<IContour>',
+      name: 'IErrorable<IContour>',
+      kind: UML_NODE_KINDS.intermediate,
+      members: [],
+    });
+    expect(graph.getNode('IErrorable<T>')).toEqual({
+      id: 'IErrorable<T>',
+      reflectionId: 2,
+      name: 'IErrorable<T>',
+      kind: UML_NODE_KINDS.interface,
+      members: [],
+    });
+    expect(graph.edges).toContainEqual({
+      from: 'IErrorable<IContour>',
+      to: 'IContour',
+      kind: UML_EDGE_KINDS.extends,
+    });
+    expect(graph.edges).toContainEqual({
+      from: 'IErrorable<IContour>',
+      to: 'IErrorable<T>',
+      kind: UML_EDGE_KINDS.contains,
+    });
+    expect(graph.edges).toContainEqual({
+      from: 'IErrorable<IContour>',
+      to: 'IContour',
       kind: UML_EDGE_KINDS.contains,
     });
   });
@@ -615,8 +744,8 @@ describe('createUmlGraph', () => {
     expect(graph.getNode('Result<Ok | Err>')).toBeDefined();
     expect(graph.getNode('Ok | Err')).toBeDefined();
     expect(graph.edges).toContainEqual({
-      from: 'Derived',
-      to: 'Result<Ok | Err>',
+      from: 'Result<Ok | Err>',
+      to: 'Derived',
       kind: UML_EDGE_KINDS.extends,
     });
     expect(graph.edges).toContainEqual({
@@ -898,8 +1027,8 @@ describe('createUmlGraph', () => {
       members: [],
     });
     expect(graph.edges).toContainEqual({
-      from: 'N',
-      to: 'Array<Value>',
+      from: 'Array<Value>',
+      to: 'N',
       kind: UML_EDGE_KINDS.extends,
     });
     expect(graph.edges).toContainEqual({

@@ -165,28 +165,25 @@ function renderEdge(edge: UmlEdge): string {
   const from = sanitizeMermaidAlias(edge.from);
   const to = sanitizeMermaidAlias(edge.to);
 
-  const arrow = (() => {
-    switch (edge.kind) {
-      case UML_EDGE_KINDS.extends:
-        return '<|--';
-
-      case UML_EDGE_KINDS.implements:
-        return '<|..';
-
-      case UML_EDGE_KINDS.association:
-        return '-->';
-
-      case UML_EDGE_KINDS.contains:
-        return '*--';
-
-      default:
-        throw new Error(`Unknown UML edge kind: ${String(edge.kind)}`);
-    }
-  })();
-
   const multiplicity = edge.multiplicity ? ` "${edge.multiplicity}"` : '';
   const label = edge.memberName ? ` : ${edge.memberName}` : '';
-  return `${from} ${arrow}${multiplicity} ${to}${label}`;
+
+  switch (edge.kind) {
+    case UML_EDGE_KINDS.extends:
+      return `${from} <|-- ${to}`;
+
+    case UML_EDGE_KINDS.implements:
+      return `${from} <|.. ${to}`;
+
+    case UML_EDGE_KINDS.association:
+      return `${from} -->${multiplicity} ${to}${label}`;
+
+    case UML_EDGE_KINDS.contains:
+      return `${from} *--${multiplicity} ${to}${label}`;
+
+    default:
+      throw new Error(`Unknown UML edge kind: ${String(edge.kind)}`);
+  }
 }
 
 export function renderUmlGraphAsMermaidClassDiagram(

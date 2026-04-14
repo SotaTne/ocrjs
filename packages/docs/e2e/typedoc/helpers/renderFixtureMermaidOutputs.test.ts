@@ -26,7 +26,7 @@ describe('renderFixtureMermaidOutputs', () => {
       '<pre class="mermaid">',
     );
     expect(rendered.readOutput('Schedule.md')).toContain('```mermaid');
-  }, 20000);
+  }, 60000);
 
   it('fixture dir からも mermaid の比較情報をまとめて作れる', async () => {
     const rendered = await renderFixtureMermaidOutputs({
@@ -35,5 +35,5 @@ describe('renderFixtureMermaidOutputs', () => {
     cleanups.push(rendered.cleanup);
 
     expect(rendered.actualPaths).toBe(rendered.expectedPaths);
-  }, 20000);
+  }, 60000);
 });

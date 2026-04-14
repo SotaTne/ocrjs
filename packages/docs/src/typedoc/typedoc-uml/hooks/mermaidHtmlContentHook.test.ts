@@ -84,7 +84,7 @@ class uml_Derived[&quot;Derived&quot;] {
 class uml_Base[&quot;Base&quot;] {
 }
 
-uml_Derived &lt;|-- uml_Base
+uml_Base &lt;|-- uml_Derived
 
 click uml_Derived href &quot;Derived.html&quot; &quot;Derived&quot;
 click uml_Base href &quot;Base.html&quot; &quot;Base&quot;</pre>`);

@@ -1,0 +1,16 @@
+<pre class="mermaid">classDiagram
+class uml_Worker[&quot;Worker&quot;] {
+}
+class uml_Base[&quot;Base&quot;] {
+  &lt;&lt;abstract&gt;&gt;
+}
+class uml_IWorker[&quot;IWorker&quot;] {
+  &lt;&lt;interface&gt;&gt;
+}
+
+uml_Base &lt;|-- uml_Worker
+uml_IWorker &lt;|.. uml_Worker
+
+click uml_Worker href &quot;../index.html&quot; &quot;Worker&quot;
+click uml_Base href &quot;../index.html&quot; &quot;Base&quot;
+click uml_IWorker href &quot;../index.html#iworker&quot; &quot;IWorker&quot;</pre>

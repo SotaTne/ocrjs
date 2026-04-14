@@ -18,8 +18,8 @@ class uml_Entry[&quot;Entry&quot;] {
   +value : string
 }
 
-uml_Schedule &lt;|-- uml_Base
-uml_Schedule &lt;|.. uml_IScheduleOwner
+uml_Base &lt;|-- uml_Schedule
+uml_IScheduleOwner &lt;|.. uml_Schedule
 uml_Schedule --&gt; &quot;1&quot; uml_EntryCollection : entries
 uml_Schedule --&gt; &quot;1&quot; uml_EntryCollection : getEntries
 uml_IScheduleOwner --&gt; &quot;1&quot; uml_EntryCollection : getEntries

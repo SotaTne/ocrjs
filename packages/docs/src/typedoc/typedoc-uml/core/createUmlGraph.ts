@@ -334,8 +334,8 @@ function addIntermediateTypeEdges(
     if (isDeclarationReflectionLike(targetModel)) {
       ensureDeclarationNode(graph, targetModel);
       graph.addEdge({
-        from: fromId,
-        to: getDeclarationDisplayName(targetModel),
+        from: getDeclarationDisplayName(targetModel),
+        to: fromId,
         kind: rootKind,
       });
       return;
@@ -344,10 +344,22 @@ function addIntermediateTypeEdges(
 
   ensureIntermediateNode(graph, nodeId);
   graph.addEdge({
-    from: fromId,
-    to: nodeId,
+    from: nodeId,
+    to: fromId,
     kind: rootKind,
   });
+
+  if (node.kind === RELATED_TYPE_KINDS.generic && typeof node.id === 'number') {
+    const targetModel = modelById.get(node.id);
+    if (isDeclarationReflectionLike(targetModel)) {
+      ensureDeclarationNode(graph, targetModel);
+      graph.addEdge({
+        from: nodeId,
+        to: getDeclarationDisplayName(targetModel),
+        kind: UML_EDGE_KINDS.contains,
+      });
+    }
+  }
 
   for (const child of node.children) {
     const childId = resolveGraphNodeId(child.node, modelById);
@@ -401,6 +413,10 @@ function addContainedChildren(
       }
     }
 
+    if (childId === fromId) {
+      continue;
+    }
+
     graph.addEdge({
       from: fromId,
       to: childId,
@@ -432,10 +448,15 @@ function addPropertyAssociation(
       return;
     }
     ensureDeclarationNode(graph, targetModel);
+    const targetId = getDeclarationDisplayName(targetModel);
+
+    if (targetId === fromId) {
+      return;
+    }
 
     graph.addEdge({
       from: fromId,
-      to: getDeclarationDisplayName(targetModel),
+      to: targetId,
       kind: UML_EDGE_KINDS.association,
       memberName,
       visibility,
@@ -450,6 +471,11 @@ function addPropertyAssociation(
 
   const rootId = resolveGraphNodeId(rootNode, modelById);
   ensureIntermediateNode(graph, rootId);
+
+  if (rootId === fromId) {
+    return;
+  }
+
   graph.addEdge({
     from: fromId,
     to: rootId,

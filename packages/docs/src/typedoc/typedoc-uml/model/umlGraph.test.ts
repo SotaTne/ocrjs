@@ -115,4 +115,27 @@ describe("UmlGraphModel", () => {
       },
     ]);
   });
+
+  it("同じ edge は重複して追加しない", () => {
+    const graph = new UmlGraphModel();
+
+    graph.addEdge({
+      from: "Error___null",
+      to: "Error",
+      kind: UML_EDGE_KINDS.contains,
+    });
+    graph.addEdge({
+      from: "Error___null",
+      to: "Error",
+      kind: UML_EDGE_KINDS.contains,
+    });
+
+    expect(graph.edges).toEqual([
+      {
+        from: "Error___null",
+        to: "Error",
+        kind: UML_EDGE_KINDS.contains,
+      },
+    ]);
+  });
 });

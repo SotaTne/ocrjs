@@ -81,6 +81,7 @@ export type UmlEdge = {
 export class UmlGraphModel {
   readonly nodes = new Map<string, UmlNode>();
   readonly edges: UmlEdge[] = [];
+  readonly #edgeKeys = new Set<string>();
 
   addNode(node: UmlNode): void {
     this.nodes.set(node.id, node);
@@ -91,6 +92,20 @@ export class UmlGraphModel {
   }
 
   addEdge(edge: UmlEdge): void {
+    const key = [
+      edge.from,
+      edge.to,
+      edge.kind,
+      edge.memberName ?? '',
+      edge.visibility ?? '',
+      edge.multiplicity ?? '',
+    ].join('\u0000');
+
+    if (this.#edgeKeys.has(key)) {
+      return;
+    }
+
+    this.#edgeKeys.add(key);
     this.edges.push(edge);
   }
 
