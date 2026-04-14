@@ -12,7 +12,7 @@ class uml_IWorker["IWorker"] {
 uml_Base <|-- uml_Worker
 uml_IWorker <|.. uml_Worker
 
-click uml_Worker href "../README.md" "Worker"
-click uml_Base href "../README.md" "Base"
+click uml_Worker href "Worker.md" "Worker"
+click uml_Base href "Base.md" "Base"
 click uml_IWorker href "../README.md" "IWorker"
 ```

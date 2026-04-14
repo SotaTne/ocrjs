@@ -1,5 +1,9 @@
 import type { ReflectionID } from '../types.js';
-import { assertLinkPageEvent, registerPageLinks } from './shared.js';
+import {
+  assertLinkPageEvent,
+  registerPageLinks,
+  registerRawLink,
+} from './shared.js';
 import type {
   LinkPageEvent,
   ReflectionAbsoluteLink,
@@ -8,6 +12,10 @@ import type {
 
 export class MarkdownLinkStore {
   readonly #links: ReflectionLinkStoreMap = new Map();
+
+  registerRawLink(id: number, pageUrl: string): void {
+    registerRawLink(this.#links, id, pageUrl);
+  }
 
   registerPage(event: LinkPageEvent): void {
     assertLinkPageEvent(event);

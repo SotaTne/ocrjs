@@ -20,5 +20,5 @@ uml_T___Promise_T_ *-- uml_T
 uml_T___Promise_T_ *-- uml_Promise_T_
 uml_Promise_T_ *-- uml_T
 
-click uml_ErrorableBase_E_ href "../README.md" "ErrorableBase&lt;E&gt;"
+click uml_ErrorableBase_E_ href "ErrorableBase.md" "ErrorableBase&lt;E&gt;"
 ```

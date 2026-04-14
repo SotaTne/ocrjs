@@ -15,7 +15,7 @@ function createReflection(
     ReflectionKind.Class,
   ];
 
-  return {
+  const reflection = {
     id,
     name,
     kindOf(kind: unknown) {
@@ -25,8 +25,17 @@ function createReflection(
 
       return kinds.includes(kind as ReflectionKind);
     },
+    getReflectionById(targetId: number) {
+      if (id === targetId) return reflection;
+      if (Array.isArray((reflection as any).children)) {
+        return (reflection as any).children.find((c: any) => c.id === targetId);
+      }
+      return undefined;
+    },
     ...extra,
   };
+
+  return reflection;
 }
 
 function createOptions() {
@@ -40,10 +49,12 @@ function createOptions() {
 
 describe('mermaidMarkdownContentHook', () => {
   it('Markdown ページでは mermaid fenced block を返す', () => {
-    const entry = createReflection(2, 'Entry');
+    const entry = createReflection(2, 'Entry', { url: 'classes/Entry.md' });
     const owner = createReflection(1, 'Schedule', {
+      url: 'classes/Schedule.md',
       children: [
         {
+          id: 10,
           name: 'entries',
           flags: {},
           type: {
@@ -63,19 +74,9 @@ describe('mermaidMarkdownContentHook', () => {
     });
     const linkStore = new MarkdownLinkStore();
 
-    linkStore.registerPage({
-      model: owner as never,
-      pageHeadings: [],
-      url: 'classes/Schedule.md',
-    });
-    linkStore.registerPage({
-      model: entry as never,
-      pageHeadings: [],
-      url: 'classes/Entry.md',
-    });
-
     const hook = createMermaidMarkdownContentHook(createOptions, linkStore);
     const content = hook({
+      urlTo: (r: any) => r.url,
       page: {
         url: 'classes/Schedule.md',
         model: owner,

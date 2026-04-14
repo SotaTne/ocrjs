@@ -5,5 +5,5 @@ class uml_IErrorable_T_["IErrorable&lt;T&gt;"] {
   +orElse(fallback : T) T
 }
 
-click uml_IErrorable_T_ href "../README.md" "IErrorable&lt;T&gt;"
+click uml_IErrorable_T_ href "IErrorable.md" "IErrorable&lt;T&gt;"
 ```

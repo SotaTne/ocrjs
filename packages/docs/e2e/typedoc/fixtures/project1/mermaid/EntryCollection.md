@@ -9,6 +9,6 @@ class uml_Entry["Entry"] {
 
 uml_EntryCollection --> "*" uml_Entry : entries
 
-click uml_EntryCollection href "../README.md" "EntryCollection"
-click uml_Entry href "../README.md" "Entry"
+click uml_EntryCollection href "EntryCollection.md" "EntryCollection"
+click uml_Entry href "Entry.md" "Entry"
 ```

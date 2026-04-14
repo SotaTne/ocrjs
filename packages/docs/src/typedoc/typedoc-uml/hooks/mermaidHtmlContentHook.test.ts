@@ -15,7 +15,7 @@ function createReflection(
     ReflectionKind.Class,
   ];
 
-  return {
+  const reflection = {
     id,
     name,
     kindOf(kind: unknown) {
@@ -25,8 +25,17 @@ function createReflection(
 
       return kinds.includes(kind as ReflectionKind);
     },
+    getReflectionById(targetId: number) {
+      if (id === targetId) return reflection;
+      if (Array.isArray((reflection as any).children)) {
+        return (reflection as any).children.find((c: any) => c.id === targetId);
+      }
+      return undefined;
+    },
     ...extra,
   };
+
+  return reflection;
 }
 
 function createOptions() {
@@ -40,8 +49,9 @@ function createOptions() {
 
 describe('mermaidHtmlContentHook', () => {
   it('HTML ページでは pre.mermaid を返す', () => {
-    const base = createReflection(2, 'Base');
+    const base = createReflection(2, 'Base', { url: 'classes/Base.html' });
     const derived = createReflection(1, 'Derived', {
+      url: 'classes/Derived.html',
       extendedTypes: [
         {
           type: 'reference',
@@ -56,20 +66,10 @@ describe('mermaidHtmlContentHook', () => {
     });
     const linkStore = new HtmlLinkStore();
 
-    linkStore.registerPage({
-      model: derived as never,
-      pageHeadings: [],
-      url: 'classes/Derived.html',
-    });
-    linkStore.registerPage({
-      model: base as never,
-      pageHeadings: [],
-      url: 'classes/Base.html',
-    });
-
     const hook = createMermaidHtmlContentHook(createOptions, linkStore);
     const html = JSX.renderElement(
       hook({
+        urlTo: (r: any) => r.url,
         page: {
           url: 'classes/Derived.html',
           model: derived,

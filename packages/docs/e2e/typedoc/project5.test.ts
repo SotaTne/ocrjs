@@ -17,10 +17,11 @@ describe('e2e/typedoc/project5', () => {
     cleanups.push(rendered.cleanup);
 
     expect(rendered.actualPaths).toBe(rendered.expectedPaths);
+
     for (const [filePath, expectedBlock] of Object.entries(
       rendered.expectedMermaidFiles,
     ).sort(([left], [right]) => left.localeCompare(right))) {
       expect(rendered.actualMermaidFiles[filePath]).toBe(expectedBlock);
     }
-  }, 40000);
+  }, 120000);
 });

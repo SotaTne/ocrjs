@@ -19,15 +19,12 @@ function createLink(pageUrl: string, anchor?: string): ReflectionAbsoluteLink {
   return link;
 }
 
-function isReflectionLike(x: unknown): x is ReflectionLike {
-  return (
-    !!x &&
+export function isReflectionLike(x: unknown): x is ReflectionLike {
+  const ok = !!x &&
     typeof x === 'object' &&
     'id' in x &&
-    typeof x.id === 'number' &&
-    'name' in x &&
-    typeof x.name === 'string'
-  );
+    typeof (x as any).id === 'number';
+  return ok;
 }
 
 function findHeadingByText(
@@ -37,17 +34,31 @@ function findHeadingByText(
   return headings.find((heading) => heading.text === name);
 }
 
-function walkReflections(
+export function walkReflections(
   model: ReflectionLike,
   visit: (reflection: ReflectionLike) => void,
 ): void {
+  if (!isReflectionLike(model)) {
+    return;
+  }
   visit(model);
 
-  if (!Array.isArray(model.children)) return;
+  const children = (model as any).children || [];
 
-  for (const child of model.children) {
-    if (!isReflectionLike(child)) continue;
+  for (const child of children) {
     walkReflections(child, visit);
+  }
+}
+
+export function registerRawLink(
+  links: ReflectionLinkStoreMap,
+  id: number,
+  pageUrl: string,
+): void {
+  // アンカーを持たない既存リンクであれば、より新しい（または事前の）URL で上書きを許可する。
+  const existing = links.get(id);
+  if (!existing || !existing.anchor) {
+    links.set(id, createLink(pageUrl));
   }
 }
 
@@ -56,7 +67,15 @@ export function registerPageLinks(
   model: ReflectionLike,
   pageUrl: string,
 ): void {
+  // 主役のモデルは、既存の登録があっても常にこのページの URL で上書きする。
+  // これにより、README や Index などの広範なページで先に登録されてしまっても、
+  // 後から処理される個別ページ（Class/Interface 等）の URL が優先されるようになる。
+  links.set(model.id, createLink(pageUrl));
+
   walkReflections(model, (reflection) => {
+    // model 自身は既にセット済みなのでスキップ
+    if (reflection.id === model.id) return;
+
     if (!links.has(reflection.id)) {
       links.set(reflection.id, createLink(pageUrl));
     }

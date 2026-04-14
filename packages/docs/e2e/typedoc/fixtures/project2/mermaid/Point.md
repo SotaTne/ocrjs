@@ -5,5 +5,5 @@ class uml_Point["Point"] {
   +y : number
 }
 
-click uml_Point href "../README.md" "Point"
+click uml_Point href "Point.md" "Point"
 ```

@@ -10,6 +10,6 @@ class uml_EntryCollection["EntryCollection"] {
 
 uml_IScheduleOwner --> "1" uml_EntryCollection : getEntries
 
-click uml_IScheduleOwner href "../README.md" "IScheduleOwner"
-click uml_EntryCollection href "../README.md" "EntryCollection"
+click uml_IScheduleOwner href "IScheduleOwner.md" "IScheduleOwner"
+click uml_EntryCollection href "../classes/EntryCollection.md" "EntryCollection"
 ```

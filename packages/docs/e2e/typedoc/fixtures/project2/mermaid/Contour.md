@@ -10,6 +10,6 @@ class uml_Point["Point"] {
 
 uml_Contour --> "*" uml_Point : points
 
-click uml_Contour href "../README.md" "Contour"
+click uml_Contour href "Contour.md" "Contour"
 click uml_Point href "../README.md" "Point"
 ```

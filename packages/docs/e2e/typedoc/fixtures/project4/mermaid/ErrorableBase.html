@@ -1,16 +1,16 @@
 <pre class="mermaid">classDiagram
-class uml_ErrorableBase_E_[&quot;ErrorableBase&lt;E&gt;&quot;] {
+class uml_ErrorableBase_E_[&quot;ErrorableBase&amp;lt;E&amp;gt;&quot;] {
   &lt;&lt;abstract&gt;&gt;
-  #guard&lt;T&gt;(fn : callable) T | Promise&lt;T&gt;
+  #guard&lt;T&gt;(fn : callable) T | Promise&amp;lt;T&amp;gt;
   #orElseBase&lt;T&gt;(self : T, fallback : T) T
 }
-class uml_T___Promise_T_[&quot;T | Promise&lt;T&gt;&quot;] {
+class uml_T___Promise_T_[&quot;T | Promise&amp;lt;T&amp;gt;&quot;] {
   &lt;&lt;intermediate&gt;&gt;
 }
 class uml_T[&quot;T&quot;] {
   &lt;&lt;intermediate&gt;&gt;
 }
-class uml_Promise_T_[&quot;Promise&lt;T&gt;&quot;] {
+class uml_Promise_T_[&quot;Promise&amp;lt;T&amp;gt;&quot;] {
   &lt;&lt;intermediate&gt;&gt;
 }
 
@@ -19,4 +19,4 @@ uml_T___Promise_T_ *-- uml_T
 uml_T___Promise_T_ *-- uml_Promise_T_
 uml_Promise_T_ *-- uml_T
 
-click uml_ErrorableBase_E_ href &quot;../index.html&quot; &quot;ErrorableBase&lt;E&gt;&quot;</pre>
+click uml_ErrorableBase_E_ href &quot;ErrorableBase.html&quot; &quot;ErrorableBase&amp;lt;E&amp;gt;&quot;</pre>

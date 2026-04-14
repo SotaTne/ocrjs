@@ -17,6 +17,7 @@ import {
 export async function renderFixtureMermaidOutputs(
   options: FixtureProjectInput,
 ): Promise<{
+  mermaidDir: string;
   expectedPaths: string;
   actualPaths: string;
   expectedMermaidFiles: Record<string, string>;
@@ -84,6 +85,7 @@ export async function renderFixtureMermaidOutputs(
   const actualMdFiles = collectOutputMermaidFiles(mdLoaded.tmpDir, mdPaths);
 
   return {
+    mermaidDir,
     expectedPaths: stringifyFilePaths(expectedMermaidPaths),
     actualPaths: stringifyFilePaths({
       ...actualHtmlFiles,

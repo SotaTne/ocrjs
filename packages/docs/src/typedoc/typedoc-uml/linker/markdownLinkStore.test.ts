@@ -103,4 +103,40 @@ describe('MarkdownLinkStore', () => {
       pageUrl: '@ocrjs/infra-contract/classes/Base.md',
     });
   });
+
+  it('先に広範なページで登録されていても、後から個別ページが登録された場合は上書きする', () => {
+    const store = new MarkdownLinkStore();
+
+    // 先に README などの広範なページで Base が見つかり、登録される
+    store.registerPage({
+      url: 'README.md',
+      model: {
+        id: 100,
+        name: 'Project',
+        children: [{ id: 1, name: 'Base' }],
+      },
+      pageHeadings: [],
+    } as LinkPageEvent);
+
+    expect(store.resolve(1)).toEqual({
+      absoluteLink: 'README.md',
+      pageUrl: 'README.md',
+    });
+
+    // 後から Base クラス自身の個別ページが処理される
+    store.registerPage({
+      url: 'classes/Base.md',
+      model: {
+        id: 1,
+        name: 'Base',
+      },
+      pageHeadings: [],
+    } as LinkPageEvent);
+
+    // 個別ページへのリンクに上書きされているべき
+    expect(store.resolve(1)).toEqual({
+      absoluteLink: 'classes/Base.md',
+      pageUrl: 'classes/Base.md',
+    });
+  });
 });

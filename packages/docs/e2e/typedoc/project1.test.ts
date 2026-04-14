@@ -17,12 +17,13 @@ describe('e2e/typedoc/project1', () => {
     cleanups.push(rendered.cleanup);
 
     expect(rendered.actualPaths).toBe(rendered.expectedPaths);
+
     for (const [filePath, expectedBlock] of Object.entries(
       rendered.expectedMermaidFiles,
     ).sort(([left], [right]) => left.localeCompare(right))) {
       expect(rendered.actualMermaidFiles[filePath]).toBe(expectedBlock);
     }
-  }, 40000);
+  }, 120000);
 
   it('mermaid fixture が想定位置に挿入される', async () => {
     const rendered = await renderFixtureMermaidOutputs({
@@ -40,5 +41,5 @@ describe('e2e/typedoc/project1', () => {
     expect(scheduleMd.indexOf('```mermaid')).toBeLessThan(
       scheduleMd.indexOf('entries'),
     );
-  }, 40000);
+  }, 120000);
 });

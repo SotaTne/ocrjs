@@ -3,6 +3,7 @@ import {
   assertLinkPageEvent,
   registerChildLinksFromHeadings,
   registerPageLinks,
+  registerRawLink,
 } from './shared.js';
 import type {
   LinkPageEvent,
@@ -12,6 +13,10 @@ import type {
 
 export class HtmlLinkStore {
   readonly #links: ReflectionLinkStoreMap = new Map();
+
+  registerRawLink(id: number, pageUrl: string): void {
+    registerRawLink(this.#links, id, pageUrl);
+  }
 
   registerPage(event: LinkPageEvent): void {
     assertLinkPageEvent(event);

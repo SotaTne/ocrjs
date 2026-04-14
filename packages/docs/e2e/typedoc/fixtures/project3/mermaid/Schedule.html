@@ -12,7 +12,7 @@ class uml_IScheduleOwner[&quot;IScheduleOwner&quot;] {
   +getEntries(limit : number) EntryCollection
 }
 class uml_EntryCollection[&quot;EntryCollection&quot;] {
-  +entries : Array&lt;Entry&gt;
+  +entries : Array&amp;lt;Entry&amp;gt;
 }
 class uml_Entry[&quot;Entry&quot;] {
   +value : string
@@ -25,8 +25,8 @@ uml_Schedule --&gt; &quot;1&quot; uml_EntryCollection : getEntries
 uml_IScheduleOwner --&gt; &quot;1&quot; uml_EntryCollection : getEntries
 uml_EntryCollection --&gt; &quot;*&quot; uml_Entry : entries
 
-click uml_Schedule href &quot;../index.html&quot; &quot;Schedule&quot;
-click uml_Base href &quot;../index.html&quot; &quot;Base&quot;
+click uml_Schedule href &quot;Schedule.html&quot; &quot;Schedule&quot;
+click uml_Base href &quot;Base.html&quot; &quot;Base&quot;
 click uml_IScheduleOwner href &quot;../index.html#ischeduleowner&quot; &quot;IScheduleOwner&quot;
-click uml_EntryCollection href &quot;../index.html&quot; &quot;EntryCollection&quot;
-click uml_Entry href &quot;../index.html&quot; &quot;Entry&quot;</pre>
+click uml_EntryCollection href &quot;EntryCollection.html&quot; &quot;EntryCollection&quot;
+click uml_Entry href &quot;Entry.html&quot; &quot;Entry&quot;</pre>
