@@ -96,7 +96,17 @@ export function registerChildLinksFromHeadings(
     const heading = findHeadingByText(pageHeadings, child.name);
     if (!heading?.link) continue;
 
-    links.set(child.id, createLink(pageUrl, heading.link));
+    // 既にその ID で個別ページへのリンク (アンカーなし) が登録されている場合は、その URL を維持しつつアンカーを補完する
+    const existing = links.get(child.id);
+    if (existing && !existing.anchor) {
+      links.set(child.id, createLink(existing.pageUrl, heading.link));
+      continue;
+    }
+
+    // 既存リンクがなければ、アンカー付きのリンクとして登録
+    if (!existing) {
+      links.set(child.id, createLink(pageUrl, heading.link));
+    }
   }
 }
 
