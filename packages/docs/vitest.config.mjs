@@ -18,7 +18,7 @@ export default defineConfig({
         test: {
           name: "e2e",
           include: ["e2e/**/*.test.ts"],
-          isolate: true,
+          isolate: false,
           fileParallelism: true,
           sequence: {
             concurrent: false,
