@@ -20,10 +20,11 @@ function createLink(pageUrl: string, anchor?: string): ReflectionAbsoluteLink {
 }
 
 export function isReflectionLike(x: unknown): x is ReflectionLike {
-  const ok = !!x &&
+  const ok =
+    !!x &&
     typeof x === 'object' &&
     'id' in x &&
-    typeof (x as any).id === 'number';
+    typeof (x as ReflectionLike).id === 'number';
   return ok;
 }
 
@@ -43,10 +44,12 @@ export function walkReflections(
   }
   visit(model);
 
-  const children = (model as any).children || [];
+  const children = (model as ReflectionLike).children || [];
 
   for (const child of children) {
-    walkReflections(child, visit);
+    if (child) {
+      walkReflections(child, visit);
+    }
   }
 }
 
@@ -57,7 +60,7 @@ export function registerRawLink(
 ): void {
   // アンカーを持たない既存リンクであれば、より新しい（または事前の）URL で上書きを許可する。
   const existing = links.get(id);
-  if (!existing || !existing.anchor) {
+  if (!existing?.anchor) {
     links.set(id, createLink(pageUrl));
   }
 }

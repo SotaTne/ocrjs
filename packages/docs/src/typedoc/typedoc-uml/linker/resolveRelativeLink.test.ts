@@ -21,20 +21,14 @@ describe('resolveRelativeLink', () => {
   });
 
   it('fromDir が空なら toPath をそのまま返す', () => {
-    expect(
-      resolveRelativeLink(
-        '',
-        'interfaces/IImage.html',
-      ),
-    ).toBe('interfaces/IImage.html');
+    expect(resolveRelativeLink('', 'interfaces/IImage.html')).toBe(
+      'interfaces/IImage.html',
+    );
   });
 
   it('同一ディレクトリ内のファイルへのリンクはディレクトリ名を含まない', () => {
     expect(
-      resolveRelativeLink(
-        'classes/Schedule.html',
-        'classes/Base.html',
-      ),
+      resolveRelativeLink('classes/Schedule.html', 'classes/Base.html'),
     ).toBe('Base.html');
   });
 

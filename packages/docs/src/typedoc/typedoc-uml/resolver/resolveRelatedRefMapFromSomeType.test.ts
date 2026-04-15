@@ -1,94 +1,92 @@
-import { describe, expect, it } from "vitest";
-import {
-  getMultiplicityFromSomeType,
-} from "./resolveRelatedRefMapFromSomeType.js";
-import type { SomeType } from "typedoc";
+import type { SomeType } from 'typedoc';
+import { describe, expect, it } from 'vitest';
+import { getMultiplicityFromSomeType } from './resolveRelatedRefMapFromSomeType.js';
 
-describe("getMultiplicityFromSomeType", () => {
+describe('getMultiplicityFromSomeType', () => {
   // type T = Foo;
-  it("単純な reference は 1 を返す", () => {
+  it('単純な reference は 1 を返す', () => {
     const docTypeNode = {
-      type: "reference",
+      type: 'reference',
       reflection: { id: 1 },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("1");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('1');
   });
 
   // type T = Foo | undefined;
-  it("optional は 0..1 を返す", () => {
+  it('optional は 0..1 を返す', () => {
     const docTypeNode = {
-      type: "optional",
-      elementType: { type: "reference", reflection: { id: 1 } },
+      type: 'optional',
+      elementType: { type: 'reference', reflection: { id: 1 } },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("0..1");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('0..1');
   });
 
   // type T = Foo[];
-  it("array は * を返す", () => {
+  it('array は * を返す', () => {
     const docTypeNode = {
-      type: "array",
-      elementType: { type: "reference", reflection: { id: 1 } },
+      type: 'array',
+      elementType: { type: 'reference', reflection: { id: 1 } },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("*");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('*');
   });
 
   // type T = [...Foo[]];
   // 実際の TypeDoc ノードとしては rest で表現されることを想定。
-  it("rest は * を返す", () => {
+  it('rest は * を返す', () => {
     const docTypeNode = {
-      type: "rest",
-      elementType: { type: "reference", reflection: { id: 1 } },
+      type: 'rest',
+      elementType: { type: 'reference', reflection: { id: 1 } },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("*");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('*');
   });
 
   // type T = Option<Option<Foo>>;
-  it("Option<Option<T>> は 0..1 に flatten される", () => {
+  it('Option<Option<T>> は 0..1 に flatten される', () => {
     const docTypeNode = {
-      type: "optional",
+      type: 'optional',
       elementType: {
-        type: "optional",
-        elementType: { type: "reference", reflection: { id: 1 } },
+        type: 'optional',
+        elementType: { type: 'reference', reflection: { id: 1 } },
       },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("0..1");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('0..1');
   });
 
   // type T = Option<Foo[]>;
-  it("Option<Array<T>> は * を返す", () => {
+  it('Option<Array<T>> は * を返す', () => {
     const docTypeNode = {
-      type: "optional",
+      type: 'optional',
       elementType: {
-        type: "array",
-        elementType: { type: "reference", reflection: { id: 1 } },
+        type: 'array',
+        elementType: { type: 'reference', reflection: { id: 1 } },
       },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("*");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('*');
   });
 
   // type T = Array<[Foo | undefined, Bar]>;
-  it("array の中に tuple や optional があっても strongest な * を返す", () => {
+  it('array の中に tuple や optional があっても strongest な * を返す', () => {
     const docTypeNode = {
-      type: "array",
+      type: 'array',
       elementType: {
-        type: "tuple",
+        type: 'tuple',
         elements: [
           {
-            type: "optional",
-            elementType: { type: "reference", reflection: { id: 1 } },
+            type: 'optional',
+            elementType: { type: 'reference', reflection: { id: 1 } },
           },
-          { type: "reference", reflection: { id: 2 } },
+          { type: 'reference', reflection: { id: 2 } },
         ],
       },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("*");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('*');
   });
 
   /**
@@ -99,23 +97,23 @@ describe("getMultiplicityFromSomeType", () => {
    *   | `${Bar | undefined}x`
    * >;
    */
-  it("かなり異常なネストでも flat に strongest な * を返す", () => {
+  it('かなり異常なネストでも flat に strongest な * を返す', () => {
     const docTypeNode = {
-      type: "optional",
+      type: 'optional',
       elementType: {
-        type: "union",
+        type: 'union',
         types: [
           {
-            type: "tuple",
+            type: 'tuple',
             elements: [
               {
-                type: "array",
+                type: 'array',
                 elementType: {
-                  type: "namedTupleMember",
+                  type: 'namedTupleMember',
                   element: {
-                    type: "optional",
+                    type: 'optional',
                     elementType: {
-                      type: "reference",
+                      type: 'reference',
                       reflection: { id: 1 },
                     },
                   },
@@ -124,14 +122,14 @@ describe("getMultiplicityFromSomeType", () => {
             ],
           },
           {
-            type: "templateLiteral",
+            type: 'templateLiteral',
             tail: [
               [
                 {
-                  type: "optional",
-                  elementType: { type: "reference", reflection: { id: 2 } },
+                  type: 'optional',
+                  elementType: { type: 'reference', reflection: { id: 2 } },
                 },
-                "x",
+                'x',
               ],
             ],
           },
@@ -139,20 +137,20 @@ describe("getMultiplicityFromSomeType", () => {
       },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("*");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('*');
   });
 
   // type T = [item?: Foo];
-  it("namedTupleMember 単体では内側の multiplicity をそのまま返す", () => {
+  it('namedTupleMember 単体では内側の multiplicity をそのまま返す', () => {
     const docTypeNode = {
-      type: "namedTupleMember",
+      type: 'namedTupleMember',
       element: {
-        type: "optional",
-        elementType: { type: "reference", reflection: { id: 1 } },
+        type: 'optional',
+        elementType: { type: 'reference', reflection: { id: 1 } },
       },
     } as SomeType;
 
-    expect(getMultiplicityFromSomeType(docTypeNode)).toBe("0..1");
+    expect(getMultiplicityFromSomeType(docTypeNode)).toBe('0..1');
   });
 });
 

@@ -1,12 +1,12 @@
-import { PageEvent, RendererEvent, type Renderer } from 'typedoc';
+import { PageEvent, type Renderer, RendererEvent } from 'typedoc';
 import {
   MarkdownPageEvent,
   type MarkdownRenderer,
 } from 'typedoc-plugin-markdown';
 import type { HtmlLinkStore } from '../linker/htmlLinkStore.js';
 import type { MarkdownLinkStore } from '../linker/markdownLinkStore.js';
-import { isReflectionLike, walkReflections } from '../linker/shared.js';
-import type { LinkPageEvent } from '../linker/types.js';
+import { walkReflections } from '../linker/shared.js';
+import type { LinkPageEvent, ReflectionLike } from '../linker/types.js';
 
 function isLinkPageEventLike(value: unknown): value is LinkPageEvent {
   return (
@@ -16,15 +16,16 @@ function isLinkPageEventLike(value: unknown): value is LinkPageEvent {
     !!value.model &&
     typeof value.model === 'object' &&
     'id' in value.model &&
-    typeof value.model.id === 'number' &&
+    typeof (value.model as { id: number }).id === 'number' &&
     'name' in value.model &&
-    typeof value.model.name === 'string' &&
-    (typeof (value.model as any).hasOwnPage === 'boolean' ||
-      (value.model as any).hasOwnPage === undefined) &&
+    typeof (value.model as { name: string }).name === 'string' &&
+    (typeof (value.model as { hasOwnPage?: boolean }).hasOwnPage ===
+      'boolean' ||
+      (value.model as { hasOwnPage?: boolean }).hasOwnPage === undefined) &&
     'url' in value &&
-    typeof value.url === 'string' &&
+    typeof (value as { url: string }).url === 'string' &&
     'pageHeadings' in value &&
-    Array.isArray(value.pageHeadings)
+    Array.isArray((value as { pageHeadings: unknown[] }).pageHeadings)
   );
 }
 
@@ -35,11 +36,14 @@ export function registerMermaidHtmlLinkStoreHook(
   // レンダリング開始前に、プロジェクト内の全リフレクションに割り当てられた URL を事前に登録する。
   renderer.on(RendererEvent.BEGIN, (event) => {
     // ログを整理
-    const project = event.project as any;
+    const project = event.project as unknown as ReflectionLike;
 
     walkReflections(project, (reflection) => {
-      if (typeof (reflection as any).url === 'string') {
-        linkStore.registerRawLink(reflection.id, (reflection as any).url);
+      if (typeof (reflection as unknown as { url?: string }).url === 'string') {
+        linkStore.registerRawLink(
+          reflection.id,
+          (reflection as unknown as { url: string }).url,
+        );
       }
     });
   });
@@ -67,10 +71,14 @@ export function registerMermaidMarkdownLinkStoreHook(
   linkStore: MarkdownLinkStore,
 ): void {
   // Markdown 側でも同様に、事前登録を行う。
-  renderer.on(RendererEvent.BEGIN as any, (event: any) => {
-    walkReflections(event.project, (reflection) => {
-      if (typeof (reflection as any).url === 'string') {
-        linkStore.registerRawLink(reflection.id, (reflection as any).url);
+  renderer.on(RendererEvent.BEGIN as never, (event: unknown) => {
+    const project = (event as { project: ReflectionLike }).project;
+    walkReflections(project, (reflection) => {
+      if (typeof (reflection as unknown as { url?: string }).url === 'string') {
+        linkStore.registerRawLink(
+          reflection.id,
+          (reflection as unknown as { url: string }).url,
+        );
       }
     });
   });

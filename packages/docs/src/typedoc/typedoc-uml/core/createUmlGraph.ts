@@ -39,9 +39,7 @@ function hasSomeType(
   return !!type && typeof type === 'object' && 'type' in type;
 }
 
-function hasSignatures(
-  value: unknown,
-): value is {
+function hasSignatures(value: unknown): value is {
   name: string;
   flags?: unknown;
   signatures: Array<{ type?: SomeType }>;

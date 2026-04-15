@@ -352,7 +352,9 @@ describe('createUmlGraph', () => {
       ]),
     );
     expect(
-      graph.edges.some((edge) => edge.from === 'SelfRef' && edge.to === 'SelfRef'),
+      graph.edges.some(
+        (edge) => edge.from === 'SelfRef' && edge.to === 'SelfRef',
+      ),
     ).toBe(false);
   });
 
@@ -397,7 +399,9 @@ describe('createUmlGraph', () => {
     const graph = createUmlGraph(targets, modelById);
     const schedule = graph.getNode('Schedule');
 
-    expect(schedule?.members[0]?.typeNode?.kind).toBe(RELATED_TYPE_KINDS.generic);
+    expect(schedule?.members[0]?.typeNode?.kind).toBe(
+      RELATED_TYPE_KINDS.generic,
+    );
     expect(schedule?.members[0]?.typeNode?.text).toBe('Array');
     expect(schedule?.members[0]?.typeNode?.children[0]?.node.text).toBe(
       'Content',

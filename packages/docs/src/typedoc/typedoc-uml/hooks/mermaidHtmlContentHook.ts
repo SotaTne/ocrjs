@@ -1,4 +1,4 @@
-import type { DefaultThemeRenderContext } from 'typedoc';
+import type { DefaultThemeRenderContext, Reflection } from 'typedoc';
 import { type EventHooks, JSX, type RendererHooks } from 'typedoc';
 import type { HtmlLinkStore } from '../linker/htmlLinkStore.js';
 import type { PluginOptions } from '../options.js';
@@ -13,36 +13,50 @@ export function createMermaidHtmlContentHook(
       return JSX.createElement(JSX.Fragment, null);
     }
 
-    const mermaid = createMermaidSourceForPage(context, getOptions(), {
-      resolveReflectionLink: (reflectionId) => {
-        const project = (context as any).page?.project;
-        const reflection = project?.getReflectionById(reflectionId);
-        if (reflection) {
-          // TypeDoc が提供する現在のページからの相対 URL を取得する
-          const relativeUrl = context.urlTo(reflection);
-          if (relativeUrl && relativeUrl !== '') {
-            // resolveRelativeLink で二重に相対化されないように、
-            // 現在のページのディレクトリパスを補完して「プロジェクトルートからのパス」に見せかける
-            const currentPageUrl = context.page.url;
-            const currentDir = currentPageUrl.includes('/')
-              ? currentPageUrl.substring(0, currentPageUrl.lastIndexOf('/') + 1)
-              : '';
+    const mermaid = createMermaidSourceForPage(
+      context,
+      getOptions(),
+      {
+        resolveReflectionLink: (reflectionId) => {
+          const page = (
+            context as unknown as {
+              page: {
+                project?: { getReflectionById: (id: number) => unknown };
+              };
+            }
+          ).page;
+          const project = page?.project;
+          const reflection = project?.getReflectionById(reflectionId) as
+            | { url?: string }
+            | undefined;
+          if (reflection) {
+            // TypeDoc が提供する現在のページからの相対 URL を取得する
+            const relativeUrl = context.urlTo(reflection as Reflection);
+            if (relativeUrl && relativeUrl !== '') {
+              // resolveRelativeLink で二重に相対化されないように、
+              // 現在のページのディレクトリパスを補完して「プロジェクトルートからのパス 」に見せかける
+              const currentPageUrl = context.page.url;
+              const currentDir = currentPageUrl.includes('/')
+                ? currentPageUrl.slice(0, currentPageUrl.lastIndexOf('/') + 1)
+                : '';
 
-            // relativeUrl が "../types/A.html" で currentDir が "interfaces/" の場合、
-            // "interfaces/../types/A.html" は論理的に "/types/A.html" になる。
-            // これを resolveRelativeLink に渡せば、最終的にまた "../types/A.html" が得られる。
-            return {
-              absoluteLink: `${currentDir}${relativeUrl}`,
-              pageUrl: `${currentDir}${relativeUrl}`,
-            };
+              // relativeUrl が "../types/A.html" で currentDir が "interfaces/" の場合 、
+              // "interfaces/../types/A.html" は論理的に "/types/A.html" になる。
+              // これを resolveRelativeLink に渡せば、最終的にまた "../types/A.html" が 得られる。
+              return {
+                absoluteLink: `${currentDir}${relativeUrl}`,
+                pageUrl: `${currentDir}${relativeUrl}`,
+              };
+            }
           }
-        }
-        return linkStore.resolve(reflectionId);
+          return linkStore.resolve(reflectionId);
+        },
       },
-    }, {
-      escapeAngleBracketsInMemberTypes: true,
-      escapeAngleBracketsInLabels: true,
-    });
+      {
+        escapeAngleBracketsInMemberTypes: true,
+        escapeAngleBracketsInLabels: true,
+      },
+    );
     if (mermaid === '') {
       return JSX.createElement(JSX.Fragment, null);
     }

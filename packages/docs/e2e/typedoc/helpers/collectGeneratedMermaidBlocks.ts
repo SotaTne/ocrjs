@@ -42,7 +42,9 @@ export function collectGeneratedMermaidBlocks(
       try {
         return [
           [
-            path.relative(outputRootDir, absolutePath).replaceAll(path.sep, '/'),
+            path
+              .relative(outputRootDir, absolutePath)
+              .replaceAll(path.sep, '/'),
             extractMermaidBlock(absolutePath, contents),
           ] as const,
         ];

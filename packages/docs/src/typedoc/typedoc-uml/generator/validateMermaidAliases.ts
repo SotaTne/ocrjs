@@ -31,9 +31,10 @@ function collectReferencedAliases(line: string): string[] {
     trimmed.includes('<|..') ||
     trimmed.includes('*--')
   ) {
-    const match = /^(\S+)\s+(?:<\|--|<\|\.\.|-->|(?:\*--))(?:\s+"[^"]+")?\s+(\S+)(?:\s+:.*)?$/.exec(
-      trimmed,
-    );
+    const match =
+      /^(\S+)\s+(?:<\|--|<\|\.\.|-->|(?:\*--))(?:\s+"[^"]+")?\s+(\S+)(?:\s+:.*)?$/.exec(
+        trimmed,
+      );
 
     if (!match) {
       return [];

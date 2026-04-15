@@ -38,7 +38,10 @@ function withBasicFixture(run: (packageDir: string) => void): void {
   const repoDir = fs.mkdtempSync(path.join(TMP_DIR, 'normalize-typedoc-json-'));
 
   try {
-    fs.writeFileSync(path.join(repoDir, 'pnpm-workspace.yaml'), 'packages:\n  - packages/*\n');
+    fs.writeFileSync(
+      path.join(repoDir, 'pnpm-workspace.yaml'),
+      'packages:\n  - packages/*\n',
+    );
     const packageDir = path.join(repoDir, 'packages/scripts');
     const docsDir = path.join(packageDir, '.docs');
     fs.mkdirSync(docsDir, { recursive: true });

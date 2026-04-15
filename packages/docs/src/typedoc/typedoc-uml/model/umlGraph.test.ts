@@ -1,32 +1,32 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 import {
   MULTIPLICITY,
   RELATED_TYPE_KINDS,
   RelatedTypeNode,
-} from "./relatedType.js";
+} from './relatedType.js';
 import {
   UML_EDGE_KINDS,
   UML_NODE_KINDS,
   UML_VISIBILITY,
   UmlGraphModel,
-} from "./umlGraph.js";
+} from './umlGraph.js';
 
-describe("UmlGraphModel", () => {
-  it("member に RelatedTypeNode を保持できる", () => {
+describe('UmlGraphModel', () => {
+  it('member に RelatedTypeNode を保持できる', () => {
     const graph = new UmlGraphModel();
 
     graph.addNode({
-      id: "Schedule",
+      id: 'Schedule',
       reflectionId: 1,
-      name: "Schedule",
+      name: 'Schedule',
       kind: UML_NODE_KINDS.class,
       members: [
         {
-          name: "content",
+          name: 'content',
           visibility: UML_VISIBILITY.private,
           typeNode: new RelatedTypeNode(
             RELATED_TYPE_KINDS.reference,
-            "Content",
+            'Content',
             MULTIPLICITY.exactlyOne,
             2,
           ),
@@ -34,106 +34,106 @@ describe("UmlGraphModel", () => {
       ],
     });
 
-    const node = graph.getNode("Schedule");
-    expect(node?.members[0]?.name).toBe("content");
+    const node = graph.getNode('Schedule');
+    expect(node?.members[0]?.name).toBe('content');
     expect(node?.members[0]?.visibility).toBe(UML_VISIBILITY.private);
-    expect(node?.members[0]?.typeNode?.text).toBe("Content");
+    expect(node?.members[0]?.typeNode?.text).toBe('Content');
     expect(node?.members[0]?.typeNode?.id).toBe(2);
   });
 
-  it("association edge に memberName と visibility を保持できる", () => {
+  it('association edge に memberName と visibility を保持できる', () => {
     const graph = new UmlGraphModel();
 
     graph.addEdge({
-      from: "Schedule",
-      to: "Content",
+      from: 'Schedule',
+      to: 'Content',
       kind: UML_EDGE_KINDS.association,
-      memberName: "content",
+      memberName: 'content',
       visibility: UML_VISIBILITY.private,
       multiplicity: MULTIPLICITY.exactlyOne,
     });
 
     expect(graph.edges).toEqual([
       {
-        from: "Schedule",
-        to: "Content",
+        from: 'Schedule',
+        to: 'Content',
         kind: UML_EDGE_KINDS.association,
-        memberName: "content",
+        memberName: 'content',
         visibility: UML_VISIBILITY.private,
         multiplicity: MULTIPLICITY.exactlyOne,
       },
     ]);
   });
 
-  it("extends と implements を同じグラフに保持できる", () => {
+  it('extends と implements を同じグラフに保持できる', () => {
     const graph = new UmlGraphModel();
 
     graph.addNode({
-      id: "OnnxWebModelLoader",
+      id: 'OnnxWebModelLoader',
       reflectionId: 10,
-      name: "OnnxWebModelLoader",
+      name: 'OnnxWebModelLoader',
       kind: UML_NODE_KINDS.class,
       members: [],
     });
     graph.addNode({
-      id: "ErrorableBase",
+      id: 'ErrorableBase',
       reflectionId: 11,
-      name: "ErrorableBase",
+      name: 'ErrorableBase',
       kind: UML_NODE_KINDS.abstractClass,
       members: [],
     });
     graph.addNode({
-      id: "IModelLoader",
+      id: 'IModelLoader',
       reflectionId: 12,
-      name: "IModelLoader",
+      name: 'IModelLoader',
       kind: UML_NODE_KINDS.interface,
       members: [],
     });
 
     graph.addEdge({
-      from: "OnnxWebModelLoader",
-      to: "ErrorableBase",
+      from: 'OnnxWebModelLoader',
+      to: 'ErrorableBase',
       kind: UML_EDGE_KINDS.extends,
     });
     graph.addEdge({
-      from: "OnnxWebModelLoader",
-      to: "IModelLoader",
+      from: 'OnnxWebModelLoader',
+      to: 'IModelLoader',
       kind: UML_EDGE_KINDS.implements,
     });
 
     expect(graph.nodeList).toHaveLength(3);
     expect(graph.edges).toEqual([
       {
-        from: "OnnxWebModelLoader",
-        to: "ErrorableBase",
+        from: 'OnnxWebModelLoader',
+        to: 'ErrorableBase',
         kind: UML_EDGE_KINDS.extends,
       },
       {
-        from: "OnnxWebModelLoader",
-        to: "IModelLoader",
+        from: 'OnnxWebModelLoader',
+        to: 'IModelLoader',
         kind: UML_EDGE_KINDS.implements,
       },
     ]);
   });
 
-  it("同じ edge は重複して追加しない", () => {
+  it('同じ edge は重複して追加しない', () => {
     const graph = new UmlGraphModel();
 
     graph.addEdge({
-      from: "Error___null",
-      to: "Error",
+      from: 'Error___null',
+      to: 'Error',
       kind: UML_EDGE_KINDS.contains,
     });
     graph.addEdge({
-      from: "Error___null",
-      to: "Error",
+      from: 'Error___null',
+      to: 'Error',
       kind: UML_EDGE_KINDS.contains,
     });
 
     expect(graph.edges).toEqual([
       {
-        from: "Error___null",
-        to: "Error",
+        from: 'Error___null',
+        to: 'Error',
         kind: UML_EDGE_KINDS.contains,
       },
     ]);

@@ -27,8 +27,12 @@ function createReflection(
     },
     getReflectionById(targetId: number) {
       if (id === targetId) return reflection;
-      if (Array.isArray((reflection as any).children)) {
-        return (reflection as any).children.find((c: any) => c.id === targetId);
+      const children = (reflection as unknown as { children?: unknown[] })
+        .children;
+      if (Array.isArray(children)) {
+        return children.find(
+          (c) => (c as unknown as { id: number }).id === targetId,
+        );
       }
       return undefined;
     },
@@ -69,7 +73,7 @@ describe('mermaidHtmlContentHook', () => {
     const hook = createMermaidHtmlContentHook(createOptions, linkStore);
     const html = JSX.renderElement(
       hook({
-        urlTo: (r: any) => r.url,
+        urlTo: (r: unknown) => (r as { url: string }).url,
         page: {
           url: 'classes/Derived.html',
           model: derived,

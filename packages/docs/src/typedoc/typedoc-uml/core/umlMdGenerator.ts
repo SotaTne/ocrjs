@@ -1,2 +1,2 @@
-export * from "../generator/umlGenerator.js";
-export * from "../generator/mermaidMd.js";
+export * from '../generator/mermaidMd.js';
+export * from '../generator/umlGenerator.js';
