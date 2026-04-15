@@ -15,15 +15,27 @@ export function createMermaidHtmlContentHook(
 
     const mermaid = createMermaidSourceForPage(context, getOptions(), {
       resolveReflectionLink: (reflectionId) => {
-        // コンテキストの urlTo は相対パスを返すため、umlGenerator.ts での二重相対化を避けるために
-        // ここでは reflection.url (プロジェクトルートからのパス) を直接使用する。
         const project = (context as any).page?.project;
         const reflection = project?.getReflectionById(reflectionId);
-        if (reflection && (reflection as any).url) {
-          return {
-            absoluteLink: (reflection as any).url,
-            pageUrl: (reflection as any).url,
-          };
+        if (reflection) {
+          // TypeDoc が提供する現在のページからの相対 URL を取得する
+          const relativeUrl = context.urlTo(reflection);
+          if (relativeUrl && relativeUrl !== '') {
+            // resolveRelativeLink で二重に相対化されないように、
+            // 現在のページのディレクトリパスを補完して「プロジェクトルートからのパス」に見せかける
+            const currentPageUrl = context.page.url;
+            const currentDir = currentPageUrl.includes('/')
+              ? currentPageUrl.substring(0, currentPageUrl.lastIndexOf('/') + 1)
+              : '';
+
+            // relativeUrl が "../types/A.html" で currentDir が "interfaces/" の場合、
+            // "interfaces/../types/A.html" は論理的に "/types/A.html" になる。
+            // これを resolveRelativeLink に渡せば、最終的にまた "../types/A.html" が得られる。
+            return {
+              absoluteLink: `${currentDir}${relativeUrl}`,
+              pageUrl: `${currentDir}${relativeUrl}`,
+            };
+          }
         }
         return linkStore.resolve(reflectionId);
       },

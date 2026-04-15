@@ -19,6 +19,8 @@ function isLinkPageEventLike(value: unknown): value is LinkPageEvent {
     typeof value.model.id === 'number' &&
     'name' in value.model &&
     typeof value.model.name === 'string' &&
+    (typeof (value.model as any).hasOwnPage === 'boolean' ||
+      (value.model as any).hasOwnPage === undefined) &&
     'url' in value &&
     typeof value.url === 'string' &&
     'pageHeadings' in value &&

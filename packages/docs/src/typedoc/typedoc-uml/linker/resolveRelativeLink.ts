@@ -30,6 +30,21 @@ function relative(fromDir: string, toPath: string): string {
   return [...upSegments, ...downSegments].join('/');
 }
 
+function splitLink(link: string): { page: string; anchor?: string } {
+  const parts = link.split('#', 2);
+  const page = parts[0] ?? '';
+  const anchor = parts[1];
+
+  if (anchor === undefined) {
+    return { page };
+  }
+
+  return {
+    page,
+    anchor: `#${anchor}`,
+  };
+}
+
 export function resolveRelativeLink(
   currentAbsoluteLink: string,
   targetAbsoluteLink: string,
@@ -47,19 +62,4 @@ export function resolveRelativeLink(
     relativePath === '' ? basename(target.page) : relativePath;
 
   return target.anchor ? `${normalizedPath}${target.anchor}` : normalizedPath;
-}
-
-function splitLink(link: string): { page: string; anchor?: string } {
-  const parts = link.split('#', 2);
-  const page = parts[0] ?? '';
-  const anchor = parts[1];
-
-  if (anchor === undefined) {
-    return { page };
-  }
-
-  return {
-    page,
-    anchor: `#${anchor}`,
-  };
 }

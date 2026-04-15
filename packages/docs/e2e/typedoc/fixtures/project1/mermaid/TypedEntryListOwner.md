@@ -10,5 +10,5 @@ class uml_EntryList["EntryList"] {
 uml_TypedEntryListOwner --> "1" uml_EntryList : entries
 
 click uml_TypedEntryListOwner href "TypedEntryListOwner.md" "TypedEntryListOwner"
-click uml_EntryList href "../README.md" "EntryList"
+click uml_EntryList href "../type-aliases/EntryList.md" "EntryList"
 ```

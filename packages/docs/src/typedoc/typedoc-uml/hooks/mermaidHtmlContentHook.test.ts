@@ -86,8 +86,8 @@ class uml_Base[&quot;Base&quot;] {
 
 uml_Base &lt;|-- uml_Derived
 
-click uml_Derived href &quot;Derived.html&quot; &quot;Derived&quot;
-click uml_Base href &quot;Base.html&quot; &quot;Base&quot;</pre>`);
+click uml_Derived href &quot;classes/Derived.html&quot; &quot;Derived&quot;
+click uml_Base href &quot;classes/Base.html&quot; &quot;Base&quot;</pre>`);
   });
 
   it('content.begin hook を登録する', () => {

@@ -14,5 +14,5 @@ uml_IWorker <|.. uml_Worker
 
 click uml_Worker href "Worker.md" "Worker"
 click uml_Base href "Base.md" "Base"
-click uml_IWorker href "../README.md" "IWorker"
+click uml_IWorker href "../interfaces/IWorker.md" "IWorker"
 ```

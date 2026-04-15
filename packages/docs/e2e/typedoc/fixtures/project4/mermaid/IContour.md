@@ -17,5 +17,5 @@ uml_IErrorable_IContour_ *-- uml_IErrorable_T_
 uml_IErrorable_IContour_ *-- uml_IContour
 
 click uml_IContour href "IContour.md" "IContour"
-click uml_IErrorable_T_ href "../README.md" "IErrorable&lt;T&gt;"
+click uml_IErrorable_T_ href "IErrorable.md" "IErrorable&lt;T&gt;"
 ```

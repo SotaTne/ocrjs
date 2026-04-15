@@ -68,13 +68,15 @@ export function registerPageLinks(
   pageUrl: string,
 ): void {
   // 主役のモデルは、既存の登録があっても常にこのページの URL で上書きする。
-  // これにより、README や Index などの広範なページで先に登録されてしまっても、
-  // 後から処理される個別ページ（Class/Interface 等）の URL が優先されるようになる。
   links.set(model.id, createLink(pageUrl));
 
   walkReflections(model, (reflection) => {
     // model 自身は既にセット済みなのでスキップ
     if (reflection.id === model.id) return;
+
+    // 個別のページを持っている子要素（Class, Interface, TypeAlias 等）は、
+    // 親ページ（Module や Project 等）の一部として登録されないようにする。
+    if (reflection.hasOwnPage) return;
 
     if (!links.has(reflection.id)) {
       links.set(reflection.id, createLink(pageUrl));

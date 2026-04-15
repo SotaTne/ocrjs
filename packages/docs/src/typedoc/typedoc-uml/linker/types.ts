@@ -12,6 +12,7 @@ export type ReflectionLinkStoreMap = Map<ReflectionID, ReflectionAbsoluteLink>;
 export type ReflectionLike = {
   id: ReflectionID;
   name: string;
+  hasOwnPage?: boolean;
   children?: Array<ReflectionLike | undefined> | undefined;
 };
 

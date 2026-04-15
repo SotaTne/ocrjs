@@ -20,6 +20,24 @@ describe('resolveRelativeLink', () => {
     ).toBe('../type-aliases/Point.md');
   });
 
+  it('fromDir が空なら toPath をそのまま返す', () => {
+    expect(
+      resolveRelativeLink(
+        '',
+        'interfaces/IImage.html',
+      ),
+    ).toBe('interfaces/IImage.html');
+  });
+
+  it('同一ディレクトリ内のファイルへのリンクはディレクトリ名を含まない', () => {
+    expect(
+      resolveRelativeLink(
+        'classes/Schedule.html',
+        'classes/Base.html',
+      ),
+    ).toBe('Base.html');
+  });
+
   it('別 page かつ anchor があれば相対 path に連結する', () => {
     expect(
       resolveRelativeLink(

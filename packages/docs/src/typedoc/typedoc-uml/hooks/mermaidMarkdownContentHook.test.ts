@@ -85,7 +85,7 @@ describe('mermaidMarkdownContentHook', () => {
     } as never);
 
     expect(content).toBe(
-      '```mermaid\nclassDiagram\nclass uml_Schedule["Schedule"] {\n  +entries : Array&lt;Entry&gt;\n}\nclass uml_Entry["Entry"] {\n}\n\numl_Schedule --> "*" uml_Entry : entries\n\nclick uml_Schedule href "Schedule.md" "Schedule"\nclick uml_Entry href "Entry.md" "Entry"\n```',
+      '```mermaid\nclassDiagram\nclass uml_Schedule["Schedule"] {\n  +entries : Array&lt;Entry&gt;\n}\nclass uml_Entry["Entry"] {\n}\n\numl_Schedule --> "*" uml_Entry : entries\n\nclick uml_Schedule href "classes/Schedule.md" "Schedule"\nclick uml_Entry href "classes/Entry.md" "Entry"\n```',
     );
   });
 

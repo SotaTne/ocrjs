@@ -19,15 +19,22 @@ export function createMermaidMarkdownContentHook(
 
     const mermaid = createMermaidSourceForPage(context, getOptions(), {
       resolveReflectionLink: (reflectionId) => {
-        // コンテキストの urlTo は相対パスを返すため、二重相対化を避けるために
-        // reflection.url (プロジェクトルートからのパス) を優先して使用する。
         const project = (context as any).page?.project;
         const reflection = project?.getReflectionById(reflectionId);
-        if (reflection && (reflection as any).url) {
-          return {
-            absoluteLink: (reflection as any).url,
-            pageUrl: (reflection as any).url,
-          };
+        if (reflection) {
+          // TypeDoc が提供する現在のページからの相対 URL を取得する
+          const relativeUrl = context.urlTo(reflection);
+          if (relativeUrl && relativeUrl !== '') {
+            const currentPageUrl = context.page.url;
+            const currentDir = currentPageUrl.includes('/')
+              ? currentPageUrl.substring(0, currentPageUrl.lastIndexOf('/') + 1)
+              : '';
+
+            return {
+              absoluteLink: `${currentDir}${relativeUrl}`,
+              pageUrl: `${currentDir}${relativeUrl}`,
+            };
+          }
         }
         return linkStore.resolve(reflectionId);
       },
@@ -35,6 +42,7 @@ export function createMermaidMarkdownContentHook(
       escapeAngleBracketsInMemberTypes: true,
       escapeAngleBracketsInLabels: true,
     });
+
     if (mermaid === '') {
       return '';
     }
