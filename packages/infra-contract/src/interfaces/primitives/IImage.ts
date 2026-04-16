@@ -10,7 +10,7 @@ import type {
   TensorLayout,
   ThresholdType,
 } from '../../types/CommonTypes';
-import type { IErrorable } from '../../types/Errorable';
+import type { IErrorable } from '../traits/IErrorable';
 import type { IContour } from './IContour';
 import type { ITensor } from './ITensor';
 

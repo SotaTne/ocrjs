@@ -1,0 +1,31 @@
+{
+  "name": "@ocrjs/model-onnx-web-adapter",
+  "version": "0.0.0",
+  "description": "ONNX Runtime Web adapter for ocrjs",
+  "main": "dist/index.js",
+  "type": "module",
+  ".": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "default": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node esbuild.config.mjs",
+    "test": "echo 'test'",
+    "docs:json": "typedoc && normalize-typedoc-json --merge-base packages/docs --workspace-base"
+  },
+  "dependencies": {
+    "@ocrjs/infra-contract": "workspace:*",
+    "onnxruntime-web": "^1.20.1"
+  },
+  "devDependencies": {
+    "@ocrjs/config-tsconfig": "workspace:*",
+    "@ocrjs/config-typedoc": "workspace:*",
+    "@ocrjs/config-esbuild": "workspace:*",
+    "@ocrjs/scripts": "workspace:*",
+    "esbuild": "^0.28.0",
+    "typescript": "latest",
+    "typedoc": "^0.28.18"
+  },
+  "license": "Apache-2.0"
+}

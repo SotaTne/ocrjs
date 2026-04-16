@@ -1,4 +1,4 @@
-import type { IErrorable } from '../types/Errorable';
+import type { IErrorable } from '../interfaces/traits/IErrorable';
 
 export abstract class ErrorableBase<E extends Error = Error> {
   #error: E | null = null;

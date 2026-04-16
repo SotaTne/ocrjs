@@ -1,5 +1,5 @@
 import type { Point } from '../../types/CommonTypes';
-import type { IErrorable } from '../../types/Errorable';
+import type { IErrorable } from '../traits/IErrorable';
 
 /**
  * Polygon geometry interface

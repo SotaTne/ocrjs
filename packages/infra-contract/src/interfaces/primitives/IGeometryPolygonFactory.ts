@@ -3,7 +3,7 @@ import type {
   Rectangle,
   RotatedRectangle,
 } from '../../types/CommonTypes';
-import type { IErrorable } from '../../types/Errorable';
+import type { IErrorable } from '../traits/IErrorable';
 import type { IGeometryPolygon } from './IGeometryPolygon';
 
 /**

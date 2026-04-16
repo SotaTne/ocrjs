@@ -1,5 +1,5 @@
 import type { DType } from '../../types/CommonTypes';
-import type { IErrorable } from '../../types/Errorable';
+import type { IErrorable } from '../traits/IErrorable';
 import type { ITensor } from './ITensor';
 
 /**

@@ -1,0 +1,20 @@
+{
+  "name": "@ocrjs/model-onnx-node-adapter",
+  "version": "0.0.0",
+  "description": "ONNX Runtime Node adapter for ocrjs",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo 'test'",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@ocrjs/infra-contract": "workspace:*",
+    "onnxruntime-node": "^1.20.1"
+  },
+  "devDependencies": {
+    "@ocrjs/config-tsconfig": "workspace:*",
+    "typescript": "latest"
+  },
+  "license": "Apache-2.0"
+}

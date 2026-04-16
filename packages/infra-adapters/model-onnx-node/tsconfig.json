@@ -1,0 +1,9 @@
+{
+  "extends": "@ocrjs/config-tsconfig/node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "emitDeclarationOnly": true
+  },
+  "exclude": ["dist","node_modules"]
+}

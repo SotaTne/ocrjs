@@ -1,0 +1,6 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "extends": ["@ocrjs/config-typedoc/base.json"],
+  "entryPoints": ["./src/index.ts"],
+  "json": "./.docs/docs.json"
+}
